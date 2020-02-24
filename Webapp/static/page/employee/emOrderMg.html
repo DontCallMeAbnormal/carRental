@@ -1,0 +1,470 @@
+<meta charset="utf-8">
+<div id="page-inner">
+		<div class="panel panel-default">
+		  <!-- Default panel contents -->
+		  <div class="panel-heading">
+		  		<h1 class="page-header">
+                   <font style="vertical-align: inherit;">
+                  	 	<font style="vertical-align: inherit;">订单中心</font>
+                   </font>
+                   <small>
+	                   <font style="vertical-align: inherit;">
+	                  		<font style="vertical-align: inherit;">信息表</font>
+	                   </font>
+                   </small>
+                   </h1>
+          </div>
+		  <div class="panel-body">
+		    <p>
+		    	<div class="input-group" style="width: 50%;float: left;">
+				  <input type="date" id="querytext" placeholder="按日期查询" class="form-control"  >
+				  <div class="input-group-btn" >
+				    <button type="button" id="querybtn" data-type="order_id" class="btn btn-default">查询</button>
+				    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		              <span class="caret"></span>
+		              <span class="sr-only">Toggle Dropdown</span>
+		            </button>
+		            <ul class="dropdown-menu dropdown-menu-right">
+		              <li><a  class="choose" data-type="order_id" data-inputtype="date" data-text="按日期查询" >按日期<i class="glyphicon glyphicon-ok choose-ico"></i></a></li>
+		              <li><a  class="choose" data-type="user.user_name" data-inputtype="text" data-text="按用户名查询" >按用户名<i></i></a></li>
+		              <li><a  class="choose" data-type="order_state" data-inputtype="text" data-text="按状态">按状态<i></i></a></li>
+		            </ul>
+				  </div>
+				</div>
+		    	<button onclick="getData()" style="float: right" class="btn btn-default"><i class=" fa fa-refresh "></i>&nbsp更新资料</button>
+		    </p>
+		  </div>
+		
+		  <!-- Table -->
+		  <div class="table-responsive">
+		  <table class="table table-striped">
+		    <thead>
+		    	<tr>
+		    		<th>下单日期</th>
+		    		<th>车辆编号</th>
+		    		<th>出租日期</th>
+		    		<th>还车日期</th>
+		    		<th>订单状态</th>
+		    		<th>用户</th>
+		    		<th>订单价格</th>
+		    		<th>操作</th>
+		    	</tr>
+		    </thead>
+		    <tbody id="dataBox">
+		    	<tr>
+		    		<td>32131</td>
+		    		<td>李志强</td>
+		    		<td>1578492852</td>
+		    		<td></td>
+		    	</tr>
+		    </tbody>
+		  </table>
+		  </div>
+		</div>
+		
+		
+		
+		<!-- 模态框 -->
+		<!-- 订单详细面板 -->
+		<div id="info_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button"  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >订单详情</h4>
+			     </div>
+			     <div class="modal-body" id="info_box" style="min-height: 400px">
+			     		<div class="panel panel-default col-sm-4">
+			        		<div class="panel-heading">订单信息</div>
+			        		<table class="table">
+								<tr>
+									<th>下单时间</th>
+									<td>2020-1-13 12425</td>
+								</tr>
+								<tr>
+									<th>金额</th>
+									<td>600</td>
+								</tr>
+								<tr>
+									<th>订购天数</th>
+									<td>2</td>
+								</tr>
+								<tr>
+									<th>取车时间</th>
+									<td>2020-1-14</td>
+								</tr>
+								<tr>
+									<th>还车日期</th>
+									<td>2020-1-16</td>
+								</tr>
+								<tr>
+									<th>订单状态</th>
+									<td>实订单</td>
+								</tr>
+						  	</table>
+			        	</div>
+			        	<div class="panel panel-default col-sm-4">
+			        		<div class="panel-heading">订购车辆</div>
+			        		<table class="table">
+								<tr>
+									<th>品牌</th>
+									<td>路虎</td>
+								</tr>
+								<tr>
+									<th>型号</th>
+									<td>GTX-656</td>
+								</tr>
+								<tr>
+									<th>车型</th>
+									<td>suv</td>
+								</tr>
+								<tr>
+									<th>排量</th>
+									<td>1.8L</td>
+								</tr>
+								<tr>
+									<th>最高时速</th>
+									<td>187km/h</td>
+								</tr>
+								<tr>
+									<th>上市时间</th>
+									<td>2017-1-4</td>
+								</tr>
+						  	</table>
+			        	</div>
+			        	<div class="panel panel-default col-sm-4">
+			        		<div class="panel-heading">其他信息</div>
+			        		<table class="table">
+								<tr>
+									<th>下单用户</th>
+									<td>李广发</td>
+								</tr>
+								<tr>
+									<th>电话</th>
+									<td>157355789</td>
+								</tr>
+								<tr>
+									<th>负责人</th>
+									<td>张惊天</td>
+								</tr>
+								<tr>
+									<th>服务电话</th>
+									<td>186385789</td>
+								</tr>
+						  	</table>
+			        	</div>
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>	
+		
+		
+		<!-- 更改订单面板 -->
+		<div class="modal fade" id="edit_Modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" >
+			<div class="modal-dialog" role="document">
+   				<div class="modal-content">
+   					<div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="editModalLabel">更改订单</h4>
+				      </div>
+   					
+   					<div class="modal-body">
+   						<input class="hidden" id="order_id" type="text" value="11" />
+						<form>
+							<div class="form-group">
+					    		<label for="order_stopDate">还车日期</label>
+					    		<input type="date" class="form-control" id="order_stopDate" placeholder="修改还车日期">
+					  		</div>       
+							<div class="form-group">
+					    		<label for="order_state">订单状态</label>
+					  			<select id="order_state" class="form-control" >
+								    <option value="完成订单">完成订单</option>
+								     <option value="实订单">实订单</option>
+								    <option value="预订单">预订单</option>
+								 </select>
+					  		</div>
+					  		
+					  		<div class="form-group">
+					  			<hr style="color: #000" />
+					  			<label >输入用户的信息进行订单更改</label>
+					  		</div>
+							<div class="form-group">
+								<label for="user_phone">用户账号</label>
+								<input type="number" class="form-control" id="user_phone" placeholder="用户的账号(电话)" />
+							</div>
+							<div class="form-group">
+								<label for="user_pwd">用户密码</label>
+								<input type="text" class="form-control" id="user_pwd" placeholder="用户的密码" />
+							</div>
+						</form>
+				     </div>
+   					<div class="modal-footer">
+			        	<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        	<button type="button" class="btn btn-primary" onclick="editorder()" >提交</button>
+			      	</div>
+   				</div>
+			</div>
+		</div>
+		
+		
+		
+</div>
+<script type="text/javascript">
+	
+	//如果staffMgContext为空则请求数据
+	if(orderMgContext=="" || orderMgContext==null){
+		getData();
+	}else{
+		writerData(orderMgContext);
+	}
+	
+	
+	//ajax获取用户信息数据
+	function getData(){
+		$.get("queryOrderdetailEmp",function(data,status){
+			
+			orderMgContext=data;
+			 writerData(orderMgContext);
+		});
+	}
+	
+	//将数据写入页面
+	function writerData(data){
+		var dataBox=$("#dataBox");
+		var htmlStr="";
+		var order_id;
+    	var order_vehicle_id;
+    	var order_startDate;
+    	var order_stopDate;
+    	var order_state;
+    	var user_name;
+    	var order_price;
+	    for(var i=0;i<data.length;i++){
+	    	
+	    	order_id=data[i].order_id;
+	    	order_vehicle_id=data[i].order_vehicle_id;
+	    	order_startDate=data[i].order_startDate;
+	    	order_stopDate=data[i].order_stopDate;
+	    	order_state=data[i].order_state;
+	    	user_name=data[i].user.user_name;
+	    	order_price=data[i].order_price;
+	    	
+	    	htmlStr+='<tr>'+
+	    		'<td>'+order_id+'</td>'+
+	    		'<td>'+order_vehicle_id+'</td>'+
+	    		'<td>'+order_startDate+'</td>'+
+	    		'<td>'+order_stopDate+'</td>'+
+	    		'<td>'+order_state+'</td>'+
+	    		'<td>'+user_name+'</td>'+
+	    		'<td>'+order_price+'</td>'+
+	    		'<td><button class="btn btn-primary" onclick="showInfo('+i+')" ><i class="fa fa-list-alt "></i>&nbsp详细信息</button>'+
+	    		'<button class="btn btn-success" onclick="showEdit('+i+')" ><i class="fa fa-edit "></i>&nbsp更改</button>'+
+	    		'</td>'+
+	    	'</tr>';
+	    }
+	    
+	    dataBox.html(htmlStr);
+		
+	}
+	
+	
+	//显示订单更改
+	function showEdit(i){
+		var infoContext=orderMgContext[i];
+		
+		$("#order_stopDate").val(infoContext.order_stopDate);
+		$("#order_state").val(infoContext.order_state);
+		$("#order_id").val(infoContext.order_id);
+		$("#user_phone").val(infoContext.user.user_phone);
+		$("#user_pwd").val(infoContext.user.user_pwd);
+		$("#edit_Modal").modal();
+	}
+	
+	//提交订单更改
+	function editorder(){
+		var commiturl='updataOrderEmp';
+		var data={
+				order_id:$("#order_id").val(),
+				order_stopDate:$("#order_stopDate").val(),
+				order_state:$("#order_state").val(),
+				user_phone:$("#user_phone").val(),
+				user_pwd:$("#user_pwd").val()
+		}
+		
+		commitdata(commiturl,data,'edit_Modal');
+	}
+	
+	
+	
+	//显示订单详细信息
+	function showInfo(i){
+		console.log(orderMgContext[i]);
+		var infoContext=orderMgContext[i];
+		var infodata='<div class="panel panel-default col-sm-4">'+
+		'<div class="panel-heading">订单信息</div>'+
+		'<table class="table">'+
+		'	<tr>'+
+		'		<th>下单时间</th>'+
+		'		<td>'+infoContext.order_id+'</td>'+
+		'	</tr>'+
+		'	<tr>'+
+		'		<th>金额</th>'+
+		'		<td>'+infoContext.order_price+'</td>'+
+		'	</tr>'+
+		'	<tr>'+
+		'		<th>订购天数</th>'+
+		'		<td>'+infoContext.order_quantity+'</td>'+
+		'	</tr>'+
+		'	<tr>'+
+		'		<th>取车时间</th>'+
+		'		<td>'+infoContext.order_startDate+'</td>'+
+		'	</tr>'+
+		'	<tr>'+
+		'		<th>还车日期</th>'+
+		'		<td>'+infoContext.order_stopDate+'</td>'+
+		'	</tr>'+
+		'	<tr>'+
+		'		<th>订单状态</th>'+
+		'		<td>'+infoContext.order_state+'</td>'+
+		'	</tr>'+
+	  	'</table>'+
+	'</div>'+
+	'<div class="panel panel-default col-sm-4">'+
+	'	<div class="panel-heading">订购车辆</div>'+
+	'	<table class="table">'+
+	'		<tr>'+
+	'			<th>品牌</th>'+
+	'			<td>'+infoContext.vehicleFull.base.base_brand+'</td>'+
+	'		</tr>'+
+	'		<tr>'+
+	'			<th>型号</th>'+
+	'			<td>'+infoContext.vehicleFull.base.base_model+'</td>'+
+	'		</tr>'+
+	'		<tr>'+
+	'			<th>车型</th>'+
+	'			<td>'+infoContext.vehicleFull.base.base_type+'</td>'+
+	'		</tr>'+
+	'		<tr>'+
+	'			<th>排量</th>'+
+	'			<td>'+infoContext.vehicleFull.base.base_displacement+'L</td>'+
+	'		</tr>'+
+	'		<tr>'+
+	'			<th>最高时速</th>'+
+	'			<td>'+infoContext.vehicleFull.base.base_speed+'km/h</td>'+
+	'		</tr>'+
+	'		<tr>'+
+	'			<th>上市时间</th>'+
+	'			<td>'+infoContext.vehicleFull.base.base_produced+'</td>'+
+	'		</tr>'+
+	'  	</table>'+
+	'</div>'+
+	'<div class="panel panel-default col-sm-4">'+
+	'	<div class="panel-heading">其他信息</div>'+
+	'	<table class="table">'+
+	'		<tr>'+
+	'			<th>下单用户</th>'+
+	'			<td>'+infoContext.user.user_name+'</td>'+
+	'		</tr>'+
+	'		<tr>'+
+	'			<th>电话</th>'+
+	'			<td>'+infoContext.user.user_phone+'</td>'+
+	'		</tr>'+
+	'		<tr>'+
+	'			<th>负责人</th>'+
+	'			<td>'+infoContext.employee.employee_name+'</td>'+
+	'		</tr>'+
+	'		<tr>'+
+	'			<th>服务电话</th>'+
+	'			<td>'+infoContext.employee.employee_phone+'</td>'+
+	'		</tr>'+
+	'  	</table>'+
+	'</div>';
+		
+		$("#info_box").html(infodata);
+		$("#info_modal").modal();
+		
+		
+		
+	}
+	
+	
+	
+	//ajax方法封装
+	function commitdata(commiturl,data,modalId){
+		var postupdata=data;
+		
+		$.ajax({
+			url:commiturl,
+			async:false,
+			type:"POST",
+			data:postupdata,
+			success:function(result){
+				//响应成功则关闭模态框
+				if(result!="success"){
+					alert(result);
+				}
+				$('#'+modalId).modal('hide');
+				//响应成功刷新数据
+				getData();
+			},
+			error:function(xhr){
+				alert("失败,请重试"+xhr.status);
+				return;
+			}
+		});
+		
+		
+	}
+	
+	//查询的下拉按钮的 后面的钩 切换函数
+	$(".choose").click(function(){
+		var thebtn = $(this);
+		var i = thebtn.children("i")[0];
+		var choosebtnes=$(".choose");
+		for(var cont=0;cont < choosebtnes.length ;cont++){
+			var ii=$(choosebtnes[cont]).children("i")[0];
+			$(ii).attr("class","");
+		}
+		
+		$(i).attr("class","glyphicon glyphicon-ok choose-ico");
+		//修改输入框的提示内容
+		$("#querytext").attr("placeholder",thebtn.data("text"));
+		//修改输入框的类型
+		$("#querytext").attr("type",thebtn.data("inputtype"));
+		
+		//修改提交按钮的data-type
+		$("#querybtn").data("type",thebtn.data("type"));
+	});
+	//查询/按名字/按电话/按id
+	$("#querybtn").click(function(){
+		var thebtn = $(this);
+		var querydata;
+		if(thebtn.data("type")=="order_id"){
+			querydata={
+					order_id:$("#querytext").val()+' 00:00:00'
+			}
+		}else if(thebtn.data("type")=="user.user_name"){
+			querydata={
+					user_name:$("#querytext").val()
+			}	
+			
+		}else if(thebtn.data("type")=="order_state"){
+			querydata={
+					order_state:$("#querytext").val()
+			}		
+		}
+		
+		$.post("queryOrderdetailEmpTerm",querydata,
+			    function(data,status){
+					//将返回的数据写到页面
+					writerData(data);
+			    });
+	});
+	
+	
+	
+</script>

@@ -1,0 +1,271 @@
+<meta charset="utf-8">
+<div id="page-inner">
+		<div class="panel panel-default">
+		  <!-- Default panel contents -->
+		  <div class="panel-heading">
+		  		<h1 class="page-header">
+                   <font style="vertical-align: inherit;">
+                  	 	<font style="vertical-align: inherit;">车库管理中心</font>
+                   </font>
+                   <small>
+	                   <font style="vertical-align: inherit;">
+	                  		<font style="vertical-align: inherit;">信息表</font>
+	                   </font>
+                   </small>
+                   </h1>
+          </div>
+		  <div class="panel-body">
+		    <p>
+		    	<div class="input-group" style="width: 50%;float: left;">
+				  <input type="text" id="querytext" placeholder="按编号查询" class="form-control"  >
+				  <div class="input-group-btn" >
+				    <button type="button" id="querybtn" data-type="vehicle_id" class="btn btn-default">查询</button>
+				    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		              <span class="caret"></span>
+		              <span class="sr-only">Toggle Dropdown</span>
+		            </button>
+		            <ul class="dropdown-menu dropdown-menu-right">
+		              <li><a  class="choose" data-type="vehicle_id" data-text="按编号查询" >按编号<i class="glyphicon glyphicon-ok choose-ico"></i></a></li>
+		              <li><a  class="choose" data-type="vehicle_base_id" data-text="按品牌编号查询" >按品牌编号<i></i></a></li>
+		              <li><a  class="choose" data-type="vehicle_state" data-text="按状态查询">按状态<i></i></a></li>
+		            </ul>
+				  </div>
+				</div>
+		    	<button onclick="getData()" style="float: right" class="btn btn-default"><i class=" fa fa-refresh "></i>&nbsp更新资料</button>
+		    </p>
+		  </div>
+		
+		  <!-- Table -->
+		  <table class="table table-striped">
+		    <thead>
+		    	<tr>
+		    		<th>编号</th>
+		    		<th>名称</th>
+		    		<th>价格/天</th>
+		    		<th>车辆说明</th>
+		    		<th>里程(万公里)</th>
+		    		<th>新旧程度</th>
+		    		<th>状态</th>
+		    		<th>操作</th>
+		    		
+		    	</tr>
+		    </thead>
+		    <tbody id="dataBox">
+		    	<tr>
+		    		<td>1212</td>
+		    		<td>1200</td>
+		    		<td>超级实惠,快快来用</td>
+		    		<td>1.2万公里</td>
+		    		<td>9成新</td>
+		    		<td>空闲</td>
+		    	</tr>
+		    </tbody>
+		  </table>
+		</div>
+		
+		
+		
+		<!-- 模态框 -->
+		
+		
+		
+		<!-- 详细模态框 -->
+		<div id="info_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >详情</h4>
+			     </div>
+			     <div class="modal-body" style="min-height: 300px" >
+			        <div class="panel panel-default col-sm-5">
+						<table class="table">
+							<tbody>
+							<tr><th>品牌</th><td id="info_base_brand" >奔驰</td></tr>
+							<tr><th>型号</th><td id="info_base_model" >2018款 S 450 L 4MATIC</td></tr>
+							<tr><th>车型</th><td id="info_base_type" >跑车</td></tr><tr>
+							<th>排量</th><td id="info_base_displacement" >3L</td></tr>
+							<tr><th>最高时速</th><td id="info_base_speed" >376km/h</td></tr>
+							<tr><th>上市时间</th><td id="info_base_produced" >2017-02-01</td></tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="panel panel-default col-sm-5">
+						<img alt="" id="info_base_photo" src="" style="min-height: 200px;
+			        			min-width: 200px;
+			        			background-color: #ccc;
+			        			" class="img-thumbnail img-responsive center-block">
+					</div>
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>
+		
+		
+		
+		
+	
+		
+		
+		
+</div>
+
+<script type="text/javascript">
+
+	//如果vehicleContext为空则请求数据
+	if(vehicleContext=="" || vehicleContext==null){
+		getData();
+	}else{
+		
+		writerData(vehicleContext);
+	} 
+	
+	
+	//ajax获取员工信息数据
+	function getData(){
+		
+		$.get("queryVehicleMssgEmp",function(data,status){
+			vehicleContext=data;
+			
+			writerData(vehicleContext);
+		});
+	}
+	
+
+	
+	
+	//将数据写入页面
+	function writerData(data){
+		console.log(data);
+		var dataBox=$("#dataBox");
+		var htmlStr="";
+		
+		var vehicle_id;
+		var vehicle_base_brand;
+		var vehicle_price;
+		var vehicle_describe;
+		var vehicle_mileage;
+		var vehicle_condition;
+		var vehicle_state;
+		
+		
+	    for(var i=0;i<data.length;i++){
+	    	vehicle_id=data[i].vehicle_id;
+			
+	    	vehicle_base_brand=data[i].base.base_brand;
+			vehicle_price=data[i].vehicle_price;
+			vehicle_describe=data[i].vehicle_describe;
+			vehicle_mileage=data[i].vehicle_mileage;
+			vehicle_condition=data[i].vehicle_condition;
+			vehicle_state=data[i].vehicle_state;
+	    	htmlStr+='<tr>'+
+	    		'<td>'+vehicle_id+'</td>'+
+	    		
+	    		'<td>'+vehicle_base_brand+'</td>'+
+	    		'<td>'+vehicle_price+'</td>'+
+	    		'<td>'+vehicle_describe+'</td>'+
+	    		'<td>'+vehicle_mileage+'</td>'+
+	    		'<td>'+vehicle_condition+'</td>'+
+	    		'<td>'+vehicle_state+'</td>'+
+	    		'<td><button class="btn btn-primary" onclick="showVehicleInfo(\''+i+'\')" ><i class="fa fa-list-alt "></i>&nbsp详情</button>'+
+	    		'</td>'+
+	    	'</tr>';
+	    }
+	    dataBox.html(htmlStr);
+		
+	}
+	
+	function showVehicleInfo(i){
+		var data=vehicleContext[i];
+		
+		$("#info_base_brand").text(data.base.base_brand);
+		$("#info_base_model").text(data.base.base_model);
+		$("#info_base_type").text(data.base.base_type);
+		$("#info_base_displacement").text(data.base.base_displacement);
+		$("#info_base_speed").text(data.base.base_speed);
+		$("#info_base_produced").text(data.base.base_produced);
+		$("#info_base_photo").attr("src",data.base.base_photo);
+		
+		
+		$("#info_modal").modal();
+		
+	}
+	
+	
+	//ajax方法封装
+	function commitdata(commiturl,commitdata,modalId){
+		var postupdata=commitdata;
+		$.ajax({
+			url:commiturl,
+			async:false,
+			type:"POST",
+			data:commitdata,
+			success:function(result){
+				//响应成功则关闭模态框
+				if(result!="success"){
+					alert(result);
+				}
+				$('#'+modalId).modal('hide');
+				//响应成功刷新数据
+				getData();
+			},
+			error:function(xhr){
+				alert("失败,请重试"+xhr.status);
+				return;
+			}
+		
+		});
+		
+	}
+	
+	
+	
+	//查询的下拉按钮的 后面的钩 切换函数
+	$(".choose").click(function(){
+		var thebtn = $(this);
+		var i = thebtn.children("i")[0];
+		var choosebtnes=$(".choose");
+		for(var cont=0;cont < choosebtnes.length ;cont++){
+			var ii=$(choosebtnes[cont]).children("i")[0];
+			$(ii).attr("class","");
+		}
+		
+		$(i).attr("class","glyphicon glyphicon-ok choose-ico");
+		//修改输入框的提示内容
+		$("#querytext").attr("placeholder",thebtn.data("text"));
+		//修改提交按钮的data-type
+		$("#querybtn").data("type",thebtn.data("type"));
+	});
+	//查询/按名字/按电话/按工号/按状态
+	$("#querybtn").click(function(){
+		var thebtn = $(this);
+		var querydata;
+		if(thebtn.data("type")=="vehicle_id"){
+			querydata={
+					vehicle_id:$("#querytext").val()
+			}
+		}else if(thebtn.data("type")=="vehicle_base_id"){
+			querydata={
+					vehicle_base_id:$("#querytext").val()
+			}			
+		}else if(thebtn.data("type")=="vehicle_state"){
+			querydata={
+					vehicle_state:$("#querytext").val()
+			}			
+		}
+		
+		$.post("queryVehicleMssgEmp",querydata,
+			    function(data,status){
+					//将返回的数据写到页面
+					writerData(data);
+			    });
+	});
+	
+	
+	
+</script>	        		
+	    	    

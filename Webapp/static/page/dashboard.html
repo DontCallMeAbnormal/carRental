@@ -1,0 +1,126 @@
+<meta charset="utf-8">
+<div id="page-inner">
+		 <div class="panel panel-default">
+		  <!-- Default panel contents -->
+		  <div class="panel-heading">
+		  		<h1 class="page-header">
+                   <font style="vertical-align: inherit;">
+                  	 	<font style="vertical-align: inherit;">资讯主页</font>
+                   </font>
+                   <small>
+	                   <font style="vertical-align: inherit;">
+	                  		<font style="vertical-align: inherit;">您的应用程式的摘要</font>
+	                   </font>
+                   </small>
+                   </h1>
+          </div>
+		  <div class="panel-body">
+		    <p>
+			    <div class="row">
+			     	<div class="col-md-6" style="margin: auto;float: none;">
+			     		<canvas id="lineChart" width="400" height="400"></canvas>
+			     	</div>
+			     </div>
+		    </p>
+		   </div>
+		</div>
+<!-- 加载chatr 插件  提供图标支持 -->
+    
+ <script src="static/lib/chart/moment.js"></script>
+ <script src="static/lib/chart/Chart.min.js"></script>
+ <script type="text/javascript">
+    
+
+    //画图表
+    function showChartOrder(data,date){
+    	
+    	var ctx = $("#lineChart");
+        Chart.defaults.global.responsive = true;
+        var myNewChart = new Chart(ctx,{
+        	type: 'bar',
+        	data:{
+           		 labels: [date.seven, date.six, date.five, date.four, date.three, date.two, date.one],
+                 datasets: 
+                   [{
+    		                label: "订单统计图",
+    		                data: data,
+    		                
+    		                backgroundColor: "rgba(33,150,243,0.5)",
+    		                borderColor: "rgba(33,150,243,1)",
+    	                	
+    	           }]
+           
+           }
+        
+        });
+    	
+    }
+    
+    function getChartData(){
+    	
+    	$.ajax({
+			url:"getChartData",
+			async:false,
+			type:"GET",
+			data:null,
+			success:function(result){
+
+				
+				
+				showChartOrder(result,getweeklist());
+			},
+			error:function(xhr){
+				alert("失败,请重试"+xhr.status);
+				return;
+			}
+		
+		});
+    	
+    	
+    	
+    }
+    
+    $("#lineChart").ready(function () {
+    	getChartData();
+    	
+    	
+
+    });
+  
+    //将日期转换为字符串
+    function dateToString(now){
+        var year = now.getFullYear();
+        var month =(now.getMonth() + 1).toString();
+        var day = (now.getDate()).toString();
+        if (month.length == 1) {
+            month = "0" + month;
+        }
+        if (day.length == 1) {
+            day = "0" + day;
+        }
+
+        var dateTime = month + "-" + day;
+        return dateTime;
+      }
+    
+    //获取最近一个星期的日期的字符串
+    function getweeklist(){
+    	var datelist={
+    			one:"1",
+    			two:"2",
+    			three:"3",
+    			four:"4",
+    			five:"5",
+    			six:"6",
+    			seven:"7",
+    	}
+    	var date=new Date();
+    	for(x in datelist){
+    		datelist[x]=dateToString(date);
+    		date.setDate(date.getDate()-1);
+    	}
+    	return datelist;//日期的字符串
+    }
+    
+    
+</script>

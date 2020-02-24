@@ -1,0 +1,173 @@
+<meta charset="utf-8">
+<div id="page-inner">
+		<div class="panel panel-default">
+		  <!-- Default panel contents -->
+		  <div class="panel-heading">
+		  		<h1 class="page-header">
+                   <font style="vertical-align: inherit;">
+                  	 	<font style="vertical-align: inherit;">用户中心</font>
+                   </font>
+                   <small>
+	                   <font style="vertical-align: inherit;">
+	                  		<font style="vertical-align: inherit;">信息表</font>
+	                   </font>
+                   </small>
+                   </h1>
+          </div>
+		  <div class="panel-body">
+		    <p>
+		    	<div class="input-group" style="width: 50%;float: left;">
+				  <input type="text" id="querytext" placeholder="按名称查询" class="form-control"  >
+				  <div class="input-group-btn" >
+				    <button type="button" id="querybtn" data-type="user_name" class="btn btn-default">查询</button>
+				    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		              <span class="caret"></span>
+		              <span class="sr-only">Toggle Dropdown</span>
+		            </button>
+		            <ul class="dropdown-menu dropdown-menu-right">
+		              <li><a  class="choose" data-type="user_name" data-text="按名称查询" >按名称<i class="glyphicon glyphicon-ok choose-ico"></i></a></li>
+		              <li><a  class="choose" data-type="user_id" data-text="按ID查询" >按id</a></li>
+		              <li><a  class="choose" data-type="user_phone" data-text="按电话查询">按电话<i></i></a></li>
+		            </ul>
+				  </div>
+				</div>
+		    	<button onclick="getData()" style="float: right" class="btn btn-default"><i class=" fa fa-refresh "></i>&nbsp更新资料</button>
+		    </p>
+		  </div>
+		
+		  <!-- Table -->
+		  <table class="table table-striped">
+		    <thead>
+		    	<tr>
+		    		<th>id</th>
+		    		<th>姓名</th>
+		    		<th>电话</th>
+		    		
+		    	</tr>
+		    </thead>
+		    <tbody id="dataBox">
+		    	<tr>
+		    		<td>32131</td>
+		    		<td>李志强</td>
+		    		<td>1578492852</td>
+		    		
+		    	</tr>
+		    </tbody>
+		  </table>
+		</div>
+		
+		
+		
+		<!-- 模态框 -->
+		
+</div>
+<script type="text/javascript">
+	
+	//如果staffMgContext为空则请求数据
+	if(userMgContext=="" || userMgContext==null){
+		getData();
+	}else{
+		writerData(userMgContext);
+	}
+	
+	
+	//ajax获取用户信息数据
+	function getData(){
+		$.get("queryUserMssg",function(data,status){
+			userMgContext=data;
+			 writerData(userMgContext);
+		});
+	}
+	
+	//将数据写入页面
+	function writerData(data){
+		var dataBox=$("#dataBox");
+		var htmlStr="";
+		var user_id;
+    	var user_name;
+    	var user_phone;
+    	var user_state;
+	    for(var i=0;i<data.length;i++){
+	    	user_id=data[i].user_id;
+	    	user_name=data[i].user_name;
+	    	user_phone=data[i].user_phone;
+	    	htmlStr+='<tr>'+
+	    		'<td>'+user_id+'</td>'+
+	    		'<td>'+user_name+'</td>'+
+	    		'<td>'+user_phone+'</td>'+
+	    	'</tr>';
+	    }
+	    dataBox.html(htmlStr);
+		
+	}
+		
+	//ajax方法封装
+	function commitdata(commiturl,commitdata,modalId){
+		var postupdata=commitdata;
+		$.ajax({
+			url:commiturl,
+			async:false,
+			type:"POST",
+			data:commitdata,
+			success:function(result){
+				//响应成功则关闭模态框
+				if(result!="success"){
+					alert(result);
+				}
+				$('#'+modalId).modal('hide');
+				//响应成功刷新数据
+				getData();
+			},
+			error:function(xhr){
+				alert("失败,请重试"+xhr.status);
+				return;
+			}
+		
+		});
+		
+	}
+	
+	//查询的下拉按钮的 后面的钩 切换函数
+	$(".choose").click(function(){
+		var thebtn = $(this);
+		var i = thebtn.children("i")[0];
+		var choosebtnes=$(".choose");
+		for(var cont=0;cont < choosebtnes.length ;cont++){
+			var ii=$(choosebtnes[cont]).children("i")[0];
+			$(ii).attr("class","");
+		}
+		
+		$(i).attr("class","glyphicon glyphicon-ok choose-ico");
+		//修改输入框的提示内容
+		$("#querytext").attr("placeholder",thebtn.data("text"));
+		//修改提交按钮的data-type
+		$("#querybtn").data("type",thebtn.data("type"));
+	});
+	//查询/按名字/按电话/按id
+	$("#querybtn").click(function(){
+		var thebtn = $(this);
+		var querydata;
+		if(thebtn.data("type")=="user_id"){
+			querydata={
+					user_id:$("#querytext").val()
+			}
+		}else if(thebtn.data("type")=="user_name"){
+			querydata={
+					user_name:$("#querytext").val()
+			}			
+		}else if(thebtn.data("type")=="user_phone"){
+			querydata={
+					user_phone:$("#querytext").val()
+			}			
+		}
+		
+		$.post("queryUserTerm",querydata,
+			    function(data,status){
+					//将返回的数据写到页面
+					writerData(data);
+			    });
+	});
+	
+	
+	
+</script>

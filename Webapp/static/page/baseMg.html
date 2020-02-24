@@ -1,0 +1,500 @@
+<meta charset="utf-8">
+<div id="page-inner">
+		<div class="panel panel-default">
+		  <!-- Default panel contents -->
+		  <div class="panel-heading">
+		  		<h1 class="page-header">
+                   <font style="vertical-align: inherit;">
+                  	 	<font style="vertical-align: inherit;">车辆基础信息</font>
+                   </font>
+                   <small>
+	                   <font style="vertical-align: inherit;">
+	                  		<font style="vertical-align: inherit;">管理</font>
+	                   </font>
+                   </small>
+                   </h1>
+          </div>
+		  <div class="panel-body">
+		    <p>
+		    	<div class="input-group" style="width: 50%;float: left;">
+				  <input type="text" id="querytext" placeholder="按品牌查询" class="form-control"  >
+				  <div class="input-group-btn" >
+				    <button type="button" id="querybtn" data-type="base_brand" class="btn btn-default">查询</button>
+				    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		              <span class="caret"></span>
+		              <span class="sr-only">Toggle Dropdown</span>
+		            </button>
+		            <ul class="dropdown-menu dropdown-menu-right">
+		              <li><a  class="choose" data-type="base_brand" data-text="按品牌查询" >按品牌<i class="glyphicon glyphicon-ok choose-ico"></i></a></li>
+		              <li><a  class="choose" data-type="base_speed" data-text="按时速查询">按时速<i></i></a></li>
+		              <li><a  class="choose" data-type="base_produced" data-text="按上市时间查询(yyyy-MM-dd)">按上市时间<i></i></a></li>
+		              <li><a  class="choose" data-type="base_type" data-text="按车型查询(皮卡车\面包车\跑车\mpv|suv)">按车型<i></i></a></li>
+		              <li><a  class="choose" data-type="base_id" data-text="按ID查询" >按id</a></li>
+		            </ul>
+				  </div>
+				</div>
+		    	<button onclick="getData()" style="float: right" class="btn btn-default"><i class=" fa fa-refresh "></i>&nbsp更新资料</button>
+		    	<button onclick=" addBase()" style="float: right" class="btn btn-default"><i class=" glyphicon glyphicon-plus "></i>&nbsp添加新车型</button>
+		    </p>
+		  </div>
+		
+		  <!-- Table -->
+		  <table class="table table-striped">
+		    <thead>
+		    	<tr>
+		    		<th>图片</th>
+		    		<th>id</th>
+		    		<th>品牌</th>
+		    		<th>型号</th>
+		    		<th>类型</th>
+		    		<th>上市时间</th>
+		    		<th>排量</th>
+		    		<th>最高时速</th>
+		    		<th>操作</th>
+		    	</tr>
+		    </thead>
+		    <tbody id="dataBox">
+		    	<tr>
+		    		<td><img style="max-width: 100px" src="static/photo/123123.jpg" alt="图片失效" class="img-thumbnail img-responsive center-block"></td>
+		    		<td>123123</td>
+		    		<td>宝马</td>
+		    		<td>GTX-660</td>
+		    		<td>2020-1-5</td>
+		    		<td>2.0</td>
+		    		<td>200km/h</td>
+		    	</tr>
+		    </tbody>
+		  </table>
+		</div>
+		
+		<!-- 模态框 -->
+		
+		<!-- 新增模态框 -->
+		<div id="add_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button"  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >新增车辆信息</h4>
+			     </div>
+			     <div class="modal-body" style="min-height: 400px;">
+		     		<form role="form" >
+				     	<div class="col-md-6">
+			        		<div class="form-group">
+			        			<label>品牌</label>
+			        			<input  class="form-control" id="add_base_brand" placeholder="品牌">
+			        		</div>
+			        		<div class="form-group">
+			        			<label>型号</label>
+			        			<input class="form-control" id="add_base_model" placeholder="型号">
+			        		</div>
+			        		<div class="form-group">
+			        			<label>上市时间</label>
+			        			<input class="form-control" type="date" id="add_base_produced" placeholder="上市时间">
+			        		</div>
+			        		<div class="form-group">
+			        			<label>排量</label>
+			        			<input class="form-control" type="number" id="add_base_displacement" placeholder="排量">
+			        		</div>
+			        		<div class="form-group">
+			        			<label>最大时速</label>
+			        			<input class="form-control" type="number" id="add_base_speed" placeholder="最大时速">
+			        		</div>
+				     	</div>
+				     	<div class="col-md-6">
+				     		<div class="form-group">
+			        			<label>外形</label>
+			        			<select class="form-control" id="add_base_type" >
+								  <option selected="selected">suv</option>
+								  <option>mpv</option>
+								  <option>跑车</option>
+								  <option>面包车</option>
+								  <option>皮卡车</option>
+								</select>
+			        		</div>
+				     		<div class="form-group">
+			        			<label>图片</label>
+			        			<input  class="form-control" id="add_base_photo" type="file">
+			        		</div>
+			        		<div class="form-group">
+			        			<img alt="" id="show_photo" src="" style="min-height: 200px;
+			        			min-width: 200px;
+			        			background-color: #ccc;
+			        			" class="img-thumbnail img-responsive center-block">
+			        		</div>
+				     	</div>
+		        	</form>
+			        	
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        <button id="add_btn" onclick="postadd()" type="button" class="btn btn-info">提交</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>	
+		
+		
+		
+		<!-- 删除模态框 -->
+		<div id="delete_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-sm" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >删除</h4>
+			     </div>
+			     <div class="modal-body">
+			        	确定要删除该信息吗
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        <button id="delete_btn" type="button" class="btn btn-danger">删除</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>
+		
+		
+		
+		
+		<!-- 修改模态框 -->
+		<div id="updata_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button"  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >修改车辆信息</h4>
+			     </div>
+			     <div class="modal-body" style="min-height: 400px;">
+		     		<form role="form" >
+				     	<div class="col-md-6">
+			        		<div class="form-group">
+			        			<label>品牌</label>
+			        			<input  class="form-control" id="updata_base_brand" placeholder="品牌">
+			        		</div>
+			        		<div class="form-group">
+			        			<label>型号</label>
+			        			<input class="form-control" id="updata_base_model" placeholder="型号">
+			        		</div>
+			        		<div class="form-group">
+			        			<label>上市时间</label>
+			        			<input class="form-control" type="date" id="updata_base_produced" placeholder="上市时间">
+			        		</div>
+			        		<div class="form-group">
+			        			<label>排量</label>
+			        			<input class="form-control" type="number" id="updata_base_displacement" placeholder="排量">
+			        		</div>
+			        		<div class="form-group">
+			        			<label>最大时速</label>
+			        			<input class="form-control" type="number" id="updata_base_speed" placeholder="最大时速">
+			        		</div>
+				     	</div>
+				     	<div class="col-md-6">
+				     		<div class="form-group">
+			        			<label>外形</label>
+			        			<select class="form-control" id="updata_base_type" >
+								  <option selected="selected">suv</option>
+								  <option>mpv</option>
+								  <option>跑车</option>
+								  <option>面包车</option>
+								  <option>皮卡车</option>
+								</select>
+			        		</div>
+				     		<div class="form-group">
+			        			<label>图片</label>
+			        			<input  class="form-control" id="updata_base_photo" type="file">
+			        		</div>
+			        		<div class="form-group">
+			        			<img alt="" id="updata_show_photo" src="" style="min-height: 200px;
+			        			min-width: 200px;
+			        			background-color: #ccc;
+			        			" class="img-thumbnail img-responsive center-block">
+			        		</div>
+				     	</div>
+		        	</form>
+			        	
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        <button id="updata_btn"  type="button" class="btn btn-info">提交</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>
+		
+		
+		
+		
+</div>
+<script type="text/javascript">
+	
+	//如果staffMgContext为空则请求数据
+	if(baseMgContext=="" || baseMgContext==null){
+		getData();
+	}else{
+		writerData(baseMgContext);
+	}
+	
+	
+	//ajax获取用户信息数据
+	function getData(){
+		$.get("queryBaseMessg",function(data,status){
+			baseMgContext=data;
+			writerData(baseMgContext);
+		});
+	}
+	
+	//将数据写入页面
+	function writerData(data){
+		var dataBox=$("#dataBox");
+		var htmlStr="";
+		var base_id;
+    	var base_photo;
+    	var base_type;
+    	var base_brand;
+    	var base_model;
+    	var base_produced;
+    	var base_displacement;
+    	var base_speed;
+	    for(var i=0;i<data.length;i++){
+	    	base_id=data[i].base_id;
+	    	base_photo=data[i].base_photo;
+	    	base_type=data[i].base_type;
+	    	base_brand=data[i].base_brand;
+	    	base_model=data[i].base_model;
+	    	base_produced=data[i].base_produced;
+	    	base_displacement=data[i].base_displacement;
+	    	base_speed=data[i].base_speed;
+	    	
+	    	
+	    	htmlStr+='<tr>'+
+    		'<td>'+
+	    	'<img style="max-width: 100px" src="'+base_photo+'" alt="图片失效" class="img-thumbnail img-responsive center-block">'+
+	    	'</td>'+
+    		'<td>'+base_id+'</td>'+
+    		'<td>'+base_brand+'</td>'+
+    		'<td>'+base_model+'</td>'+
+    		'<td>'+base_type+'</td>'+
+    		'<td>'+base_produced+'</td>'+
+    		'<td>'+base_displacement+'</td>'+
+    		'<td>'+base_speed+'km/h</td>'+
+    		'<td><button class="btn btn-primary" onclick="updataBase(\''+base_id+'\','+i+')" ><i class="fa fa-edit "></i>&nbsp编辑</button>'+
+    		'<button class="btn btn-danger" onclick="deleteBase(\''+base_id+'\')"><i class="fa fa-pencil "></i>&nbsp删除</button>'+
+    	'</tr>';
+	    		
+	    }
+	    dataBox.html(htmlStr);
+		
+	}
+	
+	
+	//删除方法
+	function deleteBase(base_id){
+		console.log("删除id"+base_id);
+		$('#delete_modal').modal();
+		$('#delete_btn').attr({
+			"onclick":"postDelete(\'"+base_id+"\')"
+		});
+	}
+	
+	//删除提交
+	function postDelete(base_id){
+		var postdata={
+				id:base_id
+		};
+		$.post("deleteBase",{
+				id:base_id
+		},function(data,status){
+			if(data=="success"){
+				$('#delete_modal').modal('hide');
+			}else{
+				alert(data);
+			}
+			
+		});
+	}
+	
+	
+	
+	//ajax方法封装
+	function commitdata(commiturl,commitdata,modalId){
+		var postupdata=commitdata;
+		$.ajax({
+			url:commiturl,
+			async:false,
+			type:"POST",
+			data:commitdata,
+			contentType: false,
+			processData:false,
+			success:function(result){
+				//响应成功则关闭模态框
+				if(result!="success"){
+					alert(result);
+				}
+				$('#'+modalId).modal('hide');
+				//响应成功刷新数据
+				getData();
+			},
+			error:function(xhr){
+				alert("失败,请重试"+xhr.status);
+				return;
+			}
+		
+		});
+		
+		
+	}
+	
+	
+	
+	
+	//上传图片,图片框切换触发,调用FileReader接口读取本地文件并显示
+	$("#add_base_photo").change(function (){
+		var file=this.files[0];
+		var reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = function(e){
+			$("#show_photo").attr("src",this.result);
+		}
+	})
+	
+	
+	
+	//新增方法
+	function addBase(){
+		$('#add_modal').modal();//打开模态框
+	}
+	//新增提交
+	function postadd(){
+		var postupdata = new FormData();
+		postupdata.append('base_type', document.getElementById('add_base_type').value);
+		postupdata.append('base_brand', document.getElementById('add_base_brand').value);
+		postupdata.append('base_model', document.getElementById('add_base_model').value);
+		postupdata.append('base_produced', document.getElementById('add_base_produced').value);
+		postupdata.append('base_displacement', document.getElementById('add_base_displacement').value);
+		postupdata.append('base_speed', document.getElementById('add_base_speed').value);
+		postupdata.append('fille', document.getElementById('add_base_photo').files[0]);
+		console.log(postupdata);
+		commitdata("addBase",postupdata,"add_modal");
+	}
+	
+	
+	
+	
+	
+	//查询的下拉按钮的 后面的钩 切换函数
+	$(".choose").click(function(){
+		var thebtn = $(this);
+		var i = thebtn.children("i")[0];
+		var choosebtnes=$(".choose");
+		for(var cont=0;cont < choosebtnes.length ;cont++){
+			var ii=$(choosebtnes[cont]).children("i")[0];
+			$(ii).attr("class","");
+		}
+		
+		$(i).attr("class","glyphicon glyphicon-ok choose-ico");
+		//修改输入框的提示内容
+		$("#querytext").attr("placeholder",thebtn.data("text"));
+		//如果勾选了按时间查询,则改变输入框的类型为date
+		if(thebtn.data("type")=="base_produced"){
+			$("#querytext").attr("type","date");
+		}else{
+			$("#querytext").attr("type","text");
+		}
+		
+		//修改提交按钮的data-type
+		$("#querybtn").data("type",thebtn.data("type"));
+	});
+	//查询/按名字/按电话/按id
+	$("#querybtn").click(function(){
+		var thebtn = $(this);
+		var querydata;
+		if(thebtn.data("type")=="base_id"){
+			querydata={
+					base_id:$("#querytext").val()
+			}
+		}else if(thebtn.data("type")=="base_type"){
+			querydata={
+					base_type:$("#querytext").val()
+			}
+		}else if(thebtn.data("type")=="base_brand"){
+			querydata={
+					base_brand:$("#querytext").val()
+			}
+		}else if(thebtn.data("type")=="base_produced"){
+			querydata={
+					base_produced:$("#querytext").val()
+			}
+		}else if(thebtn.data("type")=="base_displacement"){
+			querydata={
+					base_displacement:$("#querytext").val()
+			}
+		}else if(thebtn.data("type")=="base_speed"){
+			querydata={
+					base_speed:$("#querytext").val()
+			}
+		}
+		$.post("queryBaseTerm",querydata,
+			    function(data,status){
+					//将返回的数据写到页面
+					writerData(data);
+			    });
+	});
+	
+	
+	$("#updata_base_photo").change(function (){
+		var file=this.files[0];
+		var reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = function(e){
+			$("#updata_show_photo").attr("src",this.result);
+		}
+	})
+	
+	//修改方法
+	function updataBase(base_id,i){
+		var infoContext=baseMgContext[i];
+		var base_brand=infoContext.base_brand;
+		var base_model=infoContext.base_model;
+		var base_produced=infoContext.base_produced;
+		var base_displacement=infoContext.base_displacement;
+		var base_speed=infoContext.base_speed;
+		var base_type=infoContext.base_type;
+		var base_photo;
+		var show_photo=infoContext.base_photo;		
+		
+		$("#updata_base_brand").val(base_brand);
+		$("#updata_base_model").val(base_model);
+		$("#updata_base_produced").val(base_produced);
+		$("#updata_base_displacement").val(base_displacement);
+		$("#updata_base_speed").val(base_speed);
+		$("#updata_base_type").val(base_type);
+		$("#updata_base_photo").val(base_photo);
+		$("#updata_show_photo").attr("src",show_photo);
+		
+		$('#updata_modal').modal();
+		$('#updata_btn').attr({
+			"onclick":"postupdata("+base_id+")"
+		});
+	}
+	//修改提交
+	function postupdata(base_id){
+		var formData=new FormData();
+		formData.append("base_id",base_id);
+		formData.append("base_brand",$("#updata_base_brand").val());
+		formData.append("base_model",$("#updata_base_model").val());
+		formData.append("base_produced",$("#updata_base_produced").val());
+		formData.append("base_displacement",$("#updata_base_displacement").val());
+		formData.append("base_speed",$("#updata_base_speed").val());
+		formData.append("base_type",$("#updata_base_type").val());
+		formData.append("file",$("#updata_base_photo").prop('files')[0]);
+		
+		commitdata("updataBase",formData,"updata_modal");
+		
+	}
+	
+</script>

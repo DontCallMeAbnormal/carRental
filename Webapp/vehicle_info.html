@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>汽车租赁系统</title>
+
+    <!-- Bootstrap -->
+    <link href="static/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="static/css/index.css" rel="stylesheet" >
+	<link href="static/css/plugin/slideshow.css" rel="stylesheet" >
+	
+	<link href="static/css/font-awesome.css" rel="stylesheet">
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+  </head>
+<body>
+
+<div class="container">
+	<div class="col-xs-12">
+	
+	
+		<!-- 顶部导航 -->
+		
+		<header>
+			<div style="height: 130px">
+				<a id="logo"><img alt="汽车租赁" src="static/photo/Carbrand.png"></a>
+				<div id="search-box">
+					<font style="color: #e91e63">
+						<span class="glyphicon glyphicon-earphone" >&emsp;157-0854-7401</span>
+					</font>
+					<br>
+					<font style="color: #9E9E9E;">
+						<span class="glyphicon glyphicon-home" >&emsp;铜仁学院,大数据,软件工程</span>
+					</font><br>
+					<form class="form-inline" style="margin-top: 10px">
+						    <input type="text" class="form-control" id="searchinput" placeholder="搜索">
+						    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+					</form>
+					
+				</div>
+			</div>
+			
+			
+			<nav class="navbar navbar-inverse">
+				<div class="container-fluid">
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li><a href="#">首页<span class="sr-only">(current)</span></a></li>
+							<li><a href="#">新闻</a></li>
+							<li><a href="#">销售代表</a></li>
+							<li><a href="#">联系</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			
+			
+		</header>
+		
+		
+		<!-- top panel -->
+		<div class="panel panel-default">
+		  	<div class="panel-body" >
+				<ol class="breadcrumb">
+					<li><a href="#">首页</a></li>
+					<li class="active">详情</li>
+				</ol>	  
+				
+				<!--汽车图片-->
+				<div class="col-md-6 vhicle">
+					<img class="img-responsive" src="/static/photo/20200114031040.png" alt="图片失效"/>
+
+				</div>
+
+				<!--汽车相关信息-->
+				<div class="col-md-6 vhicle">
+					<h2 id="vehicle_base_brand">宝马 2019款 青春运动版</h2>
+					<h3 class="price"><span class="glyphicon glyphicon-yen"></span> <span id="vahicle_price">100</span>元/天</h3>
+					<h5 class="employee_phone"><span class="glyphicon glyphicon-user"></span>&emsp;联系客服(电话):<span id="employee_phone">13235365347</span></h5>
+
+					<hr>
+					<h3 class="title_h3_bule">基本信息</h3>
+					<div class="row info_list">
+						<div class="col-md-6">
+							<span class="index-icon icon">&#xe63a;</span>
+							<span>品&emsp;牌:&emsp;</span>
+							<span id="vehicle_base_brand">宝马</span>
+						</div>
+						<div class="col-md-6">
+							<span class="index-icon icon">&#xe629;</span>
+							<span>车&emsp;型:&emsp;</span>
+							<span id="vehicle_base_type">suv</span>
+						</div>
+						<div class="col-md-6">
+							<span class="index-icon icon">&#xe826;</span>
+							<span>上市时间:&emsp;</span>
+							<span id="vehicle_base_porduced">2016-8-31</span>
+						</div>
+						<div class="col-md-6">
+							<span class="index-icon icon">&#xe623;</span>
+							<span>排&emsp;量:&emsp;</span>
+							<span id="vehicle_base_displacement">2.0L</span>
+
+						</div>
+						<div class="col-md-6">
+							<span class="index-icon icon">&#xe603;</span>
+							<span>速&emsp;度:&emsp;</span>
+							<span id="vehicle_base_speed">260km/h</span>
+						</div>
+						<div class="col-md-6">
+
+						</div>
+						
+						
+					</div>
+
+					<h3 class="title_h3_bule">租车信息</h3>
+					<div class="row info_list">
+						<div class="col-md-6">
+							<span class="index-icon icon">&#xe61f;</span>
+							<span>里&emsp;程:&emsp;</span>
+							<span id="vehicle_mileage">1.2万公里</span>
+						</div>
+						<div class="col-md-6">
+							
+							<span class="index-icon icon">&#xe61f;</span>
+							<span>新旧程度:&emsp;</span>
+							<span id="vehicle_condition">9成新</span>
+								
+						</div>
+						
+
+					</div>
+
+					
+					
+
+
+				</div>
+
+				<!--租车需知道-->
+				<div class="col-xs-12">
+					<h3 class="title_h3_black">租车需知</h3>
+					<p class="text_p_gray">在租车前你需要了解相关流程以及注意事项</p>
+					<h4 style="margin: 50px 0 20px 0;">服务方式</h4>
+					<p>
+						1.网上预订:
+						<p class="text_p_gray">&emsp;你可以在本网页进行网上车辆的预订,当您支付租赁资费后,就可以直接到门店凭您的<strong>账号和密码进行取车</strong></p>
+						2.门店直租:
+						<p class="text_p_gray">&emsp;你可以在网站中看中某辆车后,到门店进行租车</p>
+
+					</p>
+					<h4 style="margin: 50px 0 20px 0;">租车资格</h4>
+					<p class="text_p_gray">租车前，请确认您满足以下条件、持有以下证件：
+						<p class="text_p_gray">1. 年龄要求：年满18周岁</p>
+						<p class="text_p_gray">2. 证件要求：</p>
+						<p class="text_p_gray">&emsp;取车时，请出示以下证件的原件：</p>
+						<p class="text_p_gray">&emsp;(1)本人的有效身份证件</p>
+						<p class="text_p_gray">&emsp;(2)本人国内有效驾驶证</p>
+						<p class="text_p_gray">&emsp;(3)有效信用卡（本人）:</p>
+						<p class="text_p_gray">&emsp;&emsp;如果您没有符合要求的信用卡，可请亲友为您提供担保，担保人对您在租车期间所产生的一切费用及责任承担无限连带责任。</p>
+					</p>
+					<h4 style="margin: 50px 0 20px 0;">资费说明</h4>
+					
+						<table class="table table-bordered">
+							<tr>
+								<th>提前还车</th>
+								<th>逾期还车</th>
+								<th>出租天数不足一天</th>
+							</tr>
+							<tr>
+								<td>多付金额不退</td>
+								<td>补全差价</td>
+								<td>不足一天按一天计算</td>
+							</tr>
+						</table>
+
+					
+				</div>
+
+			</div>
+
+
+
+
+
+
+
+		</div>
+		
+		<!-- middel panel-->
+		<div class="panel panel-default">
+			<div class="container-fluid">
+				<!--left panel-->
+				<div class="panel-body">
+					<h3 class="panel-heading">相关车品</h3>
+					<hr style="border-bottom: 1px solid #e4e4e4;">
+
+						<div class="row">
+							<div class="col-md-4 col-sm-6">
+								<div class="thumbnail">
+									<img src="/static/photo/20200114031040.png" alt="null">
+									<div class="caption">
+										<h4>宝马 2019
+											<p>
+												<small>2016-8-31|1.2万公里|跑车</small>
+											</p>
+										</h4>
+										<div class="brand_footer">
+											<h4 class="price_lefttext"><span class="price_color">100</span>元/天</h4>
+											<button class="btn btn-success">下单</button>
+											<button class="btn btn-info">详情</button>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+
+
+							<div class="col-md-4 col-sm-6">
+								<div class="thumbnail">
+									<img src="/static/photo/20200114031040.png" alt="null">
+									<div class="caption">
+										<h4>宝马 2019
+											<p>
+												<small>2016-8-31|1.2万公里|跑车</small>
+											</p>
+										</h4>
+										<div class="brand_footer">
+											<h4 class="price_lefttext"><span class="price_color">100</span>元/天</h4>
+											<button class="btn btn-success">下单</button>
+											<button class="btn btn-info">详情</button>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+
+							<div class="col-md-4 col-sm-6">
+								<div class="thumbnail">
+									<img src="/static/photo/20200114031040.png" alt="null">
+									<div class="caption">
+										<h4>宝马 2019
+											<p>
+												<small>2016-8-31|1.2万公里|跑车</small>
+											</p>
+										</h4>
+										<div class="brand_footer">
+											<h4 class="price_lefttext"><span class="price_color">100</span>元/天</h4>
+											<button class="btn btn-success">下单</button>
+											<button class="btn btn-info">详情</button>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+
+						</div>
+
+
+				</div>
+
+				
+			</div>
+		</div>
+
+
+		
+
+		
+		<!-- 底部 -->
+		<footer class="coustom_footer container-fluid">
+			<div class="col-md-4 col-sm-6" >
+				<div class="footer_title">
+					<h3>关于我们</h3>
+					<hr>
+				</div>
+				<div class="footer_text">
+					<p>
+						李志强(LiZhiQiang),铜仁学院2016届学生,属软件工程专业
+					</p>
+					<p>
+						本网站提供汽车租赁服务,本团队仅负责平台搭建,一切纠纷与本团队无关
+					</p>
+				</div>
+			</div>
+			
+			<div class="col-md-4 col-sm-6" >
+				<div class="footer_title">
+					<h3>营业时间</h3>
+					<hr>
+				</div>
+				<div class="footer_text">
+					
+					<div>
+						<span class="light">周一至周五</span>
+						<span class="right">上午9点至下午5点</span>
+						<hr>
+						<span class="light">周末</span>
+						<span class="right">上午8点至晚上9点</span>
+						<hr>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="col-md-4 col-sm-6" >
+				<div class="footer_title">
+					<h3>联系我们</h3>
+					<hr>
+				</div>
+				<div class="footer_text">
+					<div>
+						<span class="light glyphicon glyphicon-home"></span>
+						<span class="right">贵州省 铜仁市碧江区 铜仁学院</span>
+						<hr>
+						<span class="light glyphicon glyphicon-earphone"></span>
+						<span class="right">李志强(店长): 157-0854-7401</span>
+						<hr>
+					</div>
+
+				</div>
+			</div>
+
+
+
+			<div class="col-xs-12 footer_line">
+				<hr>
+				声明：本网站的车辆信息、检测报告、视频、图片等内容均来源与网络，
+				不保证信息的真实信.
+			</div>
+
+		</footer>
+		
+	</div>
+</div>
+<script type="text/javascript" src="static/lib/jquery.min.js"></script>
+<script type="text/javascript" src="static/js/plugin/slideshow.js"></script>
+</body>
+</html>

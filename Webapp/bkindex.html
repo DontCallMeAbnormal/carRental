@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>汽车租赁系统后台管理</title>
+
+    <!-- Bootstrap -->
+    <link href="static/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="static/css/custom.css" rel="stylesheet" >
+	<link href="static/css/font-awesome.css" rel="stylesheet">
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+    	.userInfo_modal_table th{
+    		text-align: right;
+    	}
+    	.userInfo_modal_table td{
+    		text-align: center;
+    	}
+    </style>
+    
+  </head>
+  <body>
+  <div	id=wrapper>
+  
+    <nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container">
+			<div class="navbar-header" >
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			      <a class="navbar-brand" href="#" id="navbar_brand_title">Brand</a>
+			</div>
+	 		<ul class="nav navbar-top-links navbar-right nav-custom-ul">
+	 			<li class="dropdown">
+                    <a class="dropdown-toggle " data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#" onclick="userInfo_modal()" ><i class="fa fa-user fa-fw"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 用户资料</font></font></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="logoutAdmin"><i class="fa fa-sign-out fa-fw"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 登出</font></font></a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-messages -->
+                </li>
+	 		</ul>
+	  </div>
+	</nav>
+	<!-- ./nav-Top -->	
+	
+	
+	
+	<nav class="navbar-default navbar-side" role="navigation">
+		<div id="sideNav" href="" data-toggle="open" ><i class="fa fa-caret-right"></i></div>
+            <div class="sidebar-collapse in" aria-expanded="true" style="">
+                <ul class="nav" id="main-menu">
+
+                    <li>
+                        <a  onclick="onpageChage('static/page/dashboard.html',this)">
+	                        <i class="fa fa-bar-chart-o"></i>
+	                        <font style="vertical-align: inherit;"> 图表统计</font>
+                        </a>
+                    </li>
+                    <li>
+                    	<a  onclick="onpageChage('static/page/staffMg.html',this)">
+	                    	<i class="fa fa-sitemap"></i>
+	                    	<font style="vertical-align: inherit;">员工管理</font>
+                    	</a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a  onclick="onpageChage('static/page/userMg.html',this)">
+	                        <i class="fa fa-users"></i>
+	                        <font style="vertical-align: inherit;"> 用户中心</font>
+                        </a>
+                    </li>
+					<li>
+                        <a onclick="onpageChage('static/page/orderMg.html',this)">
+	                        <i class="fa fa-bookmark"></i>
+	                        <font style="vertical-align: inherit;"> 订单中心</font>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="onpageChage('static/page/vehicleMg.html',this)">
+	                        <i class="fa fa-rub"></i>
+	                        <font style="vertical-align: inherit;"> 车库管理</font>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a onclick="onpageChage('static/page/baseMg.html',this)">
+	                        <i class="fa fa-info"></i>
+	                        <font style="vertical-align: inherit;"> 品牌信息</font>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </nav>
+	
+
+		<!-- ./side -->
+
+	<div id="page-wrapper">
+	
+	
+	
+	</div>
+	
+
+		<!-- pageWrapper -->
+		
+		
+		<!-- 用户资料模态框 -->
+		<div id="userInfo_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-sm" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >用户信息</h4>
+			     </div>
+			     <div class="modal-body">
+			        	<table class="table table-hover table-bordered userInfo_modal_table">
+							<tr>
+								<th>工号</th>
+								<td id="userInfo_modal_id">123123</td>
+							</tr>
+							<tr>
+								<th>姓名</th>
+								<td id="userInfo_modal_name">李志强</td>
+							</tr>
+							<tr>
+								<th>电话</th>
+								<td id="userInfo_modal_phone">15432356234</td>
+							</tr>
+						</table>
+			        	
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>
+
+
+
+</div>
+
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="static/lib/bootstrap-3.3.7-dist/jquery-3.3.1.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="static/lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="static/js/custom.js"></script>
+
+	<!-- 按钮事件菜单缩放 -->
+	<script type="text/javascript">
+	$("#sideNav").click(function(e){
+		var sideNav=$("#sideNav");
+		var pageWrapper=$("#page-wrapper");
+		var str=sideNav.data("toggle");
+		if(str=='open'){
+			sideNav.parent().animate({left:'-260px'});
+			pageWrapper.animate({marginLeft:'0px'});
+			sideNav.data("toggle","close");
+		}else{
+			sideNav.parent().animate({left:'0px'});
+			pageWrapper.animate({marginLeft:'260px'});
+			sideNav.data("toggle","open");
+		}
+	});
+	
+	//打开用户信息框
+	function userInfo_modal(){
+		console.log(adminInfoContext.adm_id);
+		$("#userInfo_modal_id").text(adminInfoContext.adm_id);
+		$("#userInfo_modal_name").text(adminInfoContext.adm_name);
+		$("#userInfo_modal_phone").text(adminInfoContext.adm_phone);
+		$("#userInfo_modal").modal();
+	}
+	
+	</script>
+
+  </body>
+</html>

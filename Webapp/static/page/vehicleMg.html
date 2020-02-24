@@ -1,0 +1,411 @@
+<meta charset="utf-8">
+<div id="page-inner">
+		<div class="panel panel-default">
+		  <!-- Default panel contents -->
+		  <div class="panel-heading">
+		  		<h1 class="page-header">
+                   <font style="vertical-align: inherit;">
+                  	 	<font style="vertical-align: inherit;">车库管理中心</font>
+                   </font>
+                   <small>
+	                   <font style="vertical-align: inherit;">
+	                  		<font style="vertical-align: inherit;">信息表</font>
+	                   </font>
+                   </small>
+                   </h1>
+          </div>
+		  <div class="panel-body">
+		    <p>
+		    	<div class="input-group" style="width: 50%;float: left;">
+				  <input type="text" id="querytext" placeholder="按编号查询" class="form-control"  >
+				  <div class="input-group-btn" >
+				    <button type="button" id="querybtn" data-type="vehicle_id" class="btn btn-default">查询</button>
+				    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		              <span class="caret"></span>
+		              <span class="sr-only">Toggle Dropdown</span>
+		            </button>
+		            <ul class="dropdown-menu dropdown-menu-right">
+		              <li><a  class="choose" data-type="vehicle_id" data-text="按编号查询" >按编号<i class="glyphicon glyphicon-ok choose-ico"></i></a></li>
+		              <li><a  class="choose" data-type="vehicle_base_id" data-text="按品牌编号查询" >按品牌编号<i></i></a></li>
+		              <li><a  class="choose" data-type="vehicle_employee_id" data-text="按工号查询">按工号<i></i></a></li>
+		              <li><a  class="choose" data-type="vehicle_state" data-text="按状态查询">按状态<i></i></a></li>
+		            </ul>
+				  </div>
+				</div>
+		    	<button onclick="getData()" style="float: right" class="btn btn-default"><i class=" fa fa-refresh "></i>&nbsp更新资料</button>
+		   		<button onclick=" addVehicle()" style="float: right" class="btn btn-default"><i class=" glyphicon glyphicon-plus "></i>&nbsp新增车辆</button>
+		    </p>
+		  </div>
+		
+		  <!-- Table -->
+		  <table class="table table-striped">
+		    <thead>
+		    	<tr>
+		    		<th>编号</th>
+		    		<th>基础信息</th>
+		    		<th>负责人工号</th>
+		    		<th>价格/天</th>
+		    		<th>车辆说明</th>
+		    		<th>里程(万公里)</th>
+		    		<th>新旧程度</th>
+		    		<th>状态</th>
+		    	</tr>
+		    </thead>
+		    <tbody id="dataBox">
+		    	<tr>
+		    		<td>1212</td>
+		    		<td>宝马</td>
+		    		<td>54321</td>
+		    		<td>1200</td>
+		    		<td>超级实惠,快快来用</td>
+		    		<td>1.2万公里</td>
+		    		<td>9成新</td>
+		    		<td>空闲</td>
+		    	</tr>
+		    </tbody>
+		  </table>
+		</div>
+		
+		
+		
+		<!-- 模态框 -->
+		<!-- 删除模态框 -->
+		<div id="delete_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-sm" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >删除</h4>
+			     </div>
+			     <div class="modal-body">
+			        	确定要删除该车辆吗
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        <button id="delete_btn" type="button" class="btn btn-danger">删除</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>
+		
+		
+		<!-- 修改模态框 -->
+		<div id="updata_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >更改</h4>
+			     </div>
+			     <div class="modal-body" style="min-height: 300px" >
+			        	<form role="form">
+				        	<div class="col-md-6">
+				        		<div class="form-group">
+				        			<label>车型编号</label>
+				        			<input class="form-control" type="number" id="updata_vehicle_base_id" placeholder="修改车型编号">
+				        		</div>
+				        		<div class="form-group">
+				        			<label>负责人工号</label>
+				        			<input class="form-control" type="number" id="updata_vehicle_employee_id" placeholder="修改负责人工号">
+				        		</div>
+				        		<div class="form-group">
+				        			<label>价格/天</label>
+				        			<input class="form-control" type="number" id="updata_vehicle_price" placeholder="修改价格/天">
+				        		</div>
+				        	</div>
+				        	<div class="col-md-6">
+				        		<div class="form-group">
+				        			<label>车辆描述</label>
+				        			<input class="form-control" id="updata_vehicle_describe" placeholder="修改车辆描述">
+				        		</div>
+				        		<div class="form-group">
+				        			<label>里程</label>
+				        			<input class="form-control" type="number" id="updata_vehicle_mileage" placeholder="修改里程">
+				        		</div>
+				        		<div class="form-group">
+				        			<label>新旧程度</label>
+				        			<input class="form-control" type="number" id="updata_vehicle_condition" placeholder="修改新旧程度">
+				        		</div>
+			        		</div>
+			        	</form>
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        <button id="updata_btn" type="button" class="btn btn-info">提交</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>
+		
+		
+		
+		
+	<!-- 新增模态框 -->
+		<div id="add_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button"  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >新增员工</h4>
+			     </div>
+			     <div class="modal-body" style="min-height: 300px" >
+			        	<form role="form">
+			        		<div class="col-md-6">
+				        		<div class="form-group">
+				        			<label>车型编号</label>
+				        			<input class="form-control" type="number" id="add_vehicle_base_id" placeholder="修改车型编号">
+				        		</div>
+				        		<div class="form-group">
+				        			<label>负责人工号</label>
+				        			<input class="form-control" type="number" id="add_vehicle_employee_id" placeholder="修改负责人工号">
+				        		</div>
+				        		<div class="form-group">
+				        			<label>价格/天</label>
+				        			<input class="form-control" type="number" id="add_vehicle_price" placeholder="修改价格/天">
+				        		</div>
+			        		</div>
+			        		<div class="col-md-6">
+				        		<div class="form-group">
+				        			<label>车辆描述</label>
+				        			<input class="form-control" id="add_vehicle_describe" placeholder="修改车辆描述">
+				        		</div>
+				        		<div class="form-group">
+				        			<label>里程</label>
+				        			<input class="form-control" type="number" id="add_vehicle_mileage" placeholder="修改里程">
+				        		</div>
+				        		<div class="form-group">
+				        			<label>新旧程度</label>
+				        			<input class="form-control" type="number" id="add_vehicle_condition" placeholder="修改新旧程度">
+				        		</div>
+			        		</div>
+			        	</form>
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        <button id="add_btn" onclick="postadd()" type="button" class="btn btn-info">提交</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>	
+		
+		
+		
+</div>
+
+<script type="text/javascript">
+
+	//如果vehicleContext为空则请求数据
+	if(vehicleContext=="" || vehicleContext==null){
+		getData();
+	}else{
+		
+		writerData(vehicleContext);
+	} 
+	
+	
+	//ajax获取员工信息数据
+	function getData(){
+		
+		$.get("queryVehicleMssg",function(data,status){
+			vehicleContext=data;
+			
+			writerData(vehicleContext);
+		});
+	}
+	
+
+	
+	
+	//将数据写入页面
+	function writerData(data){
+		var dataBox=$("#dataBox");
+		var htmlStr="";
+		
+		var vehicle_id;
+		var vehicle_base_id;
+		var vehicle_employee_id;
+		var vehicle_price;
+		var vehicle_describe;
+		var vehicle_mileage;
+		var vehicle_condition;
+		var vehicle_state;
+		
+		
+	    for(var i=0;i<data.length;i++){
+	    	vehicle_id=data[i].vehicle_id;
+			vehicle_base_id=data[i].vehicle_base_id;
+			vehicle_employee_id=data[i].vehicle_employee_id;
+			vehicle_price=data[i].vehicle_price;
+			vehicle_describe=data[i].vehicle_describe;
+			vehicle_mileage=data[i].vehicle_mileage;
+			vehicle_condition=data[i].vehicle_condition;
+			vehicle_state=data[i].vehicle_state;
+	    	htmlStr+='<tr>'+
+	    		'<td>'+vehicle_id+'</td>'+
+	    		'<td>'+vehicle_base_id+'</td>'+
+	    		'<td>'+vehicle_employee_id+'</td>'+
+	    		'<td>'+vehicle_price+'</td>'+
+	    		'<td>'+vehicle_describe+'</td>'+
+	    		'<td>'+vehicle_mileage+'</td>'+
+	    		'<td>'+vehicle_condition+'</td>'+
+	    		'<td>'+vehicle_state+'</td>'+
+	    		'<td><button class="btn btn-primary" onclick="updataEmployee(\''+i+'\')" ><i class="fa fa-edit "></i>&nbsp编辑</button>'+
+	    		'<button class="btn btn-danger" onclick="deleteEmployee(\''+vehicle_id+'\')"><i class="fa fa-pencil "></i>&nbsp删除</button>'+
+	    		'</td>'+
+	    	'</tr>';
+	    }
+	    dataBox.html(htmlStr);
+		
+	}
+	
+	
+	//删除方法
+	function deleteEmployee(vehicle_id){
+		console.log("删除id"+vehicle_id);
+		$('#delete_modal').modal();
+		$('#delete_btn').attr({
+			"onclick":"postDelete(\'"+vehicle_id+"\')"
+		});
+	}
+	//删除提交
+	function postDelete(vehicle_id){
+		var postdata={
+				id:vehicle_id
+		};
+		commitdata("deleteVehicle",postdata,"delete_modal");
+	}
+	
+	
+	//ajax方法封装
+	function commitdata(commiturl,commitdata,modalId){
+		var postupdata=commitdata;
+		$.ajax({
+			url:commiturl,
+			async:false,
+			type:"POST",
+			data:commitdata,
+			success:function(result){
+				//响应成功则关闭模态框
+				if(result!="success"){
+					alert(result);
+				}
+				$('#'+modalId).modal('hide');
+				//响应成功刷新数据
+				getData();
+			},
+			error:function(xhr){
+				alert("失败,请重试"+xhr.status);
+				return;
+			}
+		
+		});
+		
+	}
+	
+	
+	
+	
+	//修改方法
+	function updataEmployee(i){
+		$('#updata_modal').modal();
+		var thisdata = vehicleContext[i];
+		
+		
+		$('#updata_btn').attr({
+			"onclick":"postupdata("+thisdata.vehicle_id+")"
+		});
+		$("#updata_vehicle_base_id").val(thisdata.vehicle_base_id);
+		$("#updata_vehicle_employee_id").val(thisdata.vehicle_employee_id);
+		$("#updata_vehicle_price").val(thisdata.vehicle_price);
+		$("#updata_vehicle_describe").val(thisdata.vehicle_describe);
+		$("#updata_vehicle_mileage").val(thisdata.vehicle_mileage);
+		$("#updata_vehicle_condition").val(thisdata.vehicle_condition);
+		
+	}
+	//修改提交
+	function postupdata(vehicle_id){
+		var postupdata={
+				vehicle_id:vehicle_id,
+				vehicle_employee_id:$("#updata_vehicle_employee_id").val(),
+				vehicle_price:$("#updata_vehicle_price").val(),
+				vehicle_describe:$("#updata_vehicle_describe").val(),
+				vehicle_mileage:$("#updata_vehicle_mileage").val(),
+				vehicle_condition:$("#updata_vehicle_condition").val()
+
+		};
+		commitdata("updataVehicle",postupdata,"updata_modal");
+		
+	}
+	
+	
+
+	//新增方法
+	function addVehicle(){
+		$('#add_modal').modal();//打开模态框
+	}
+	//新增提交
+	function postadd(){
+		var postupdata={
+				vehicle_base_id:$("#add_vehicle_base_id").val(),
+				vehicle_employee_id:$("#add_vehicle_employee_id").val(),
+				vehicle_price:$("#add_vehicle_price").val(),
+				vehicle_describe:$("#add_vehicle_describe").val(),
+				vehicle_mileage:$("#add_vehicle_mileage").val(),
+				vehicle_condition:$("#add_vehicle_condition").val(),
+		};
+		commitdata("addVehicle",postupdata,"add_modal");
+	}
+	
+	
+	//查询的下拉按钮的 后面的钩 切换函数
+	$(".choose").click(function(){
+		var thebtn = $(this);
+		var i = thebtn.children("i")[0];
+		var choosebtnes=$(".choose");
+		for(var cont=0;cont < choosebtnes.length ;cont++){
+			var ii=$(choosebtnes[cont]).children("i")[0];
+			$(ii).attr("class","");
+		}
+		
+		$(i).attr("class","glyphicon glyphicon-ok choose-ico");
+		//修改输入框的提示内容
+		$("#querytext").attr("placeholder",thebtn.data("text"));
+		//修改提交按钮的data-type
+		$("#querybtn").data("type",thebtn.data("type"));
+	});
+	//查询/按名字/按电话/按工号/按状态
+	$("#querybtn").click(function(){
+		var thebtn = $(this);
+		var querydata;
+		if(thebtn.data("type")=="vehicle_id"){
+			querydata={
+					vehicle_id:$("#querytext").val()
+			}
+		}else if(thebtn.data("type")=="vehicle_base_id"){
+			querydata={
+					vehicle_base_id:$("#querytext").val()
+			}			
+		}else if(thebtn.data("type")=="vehicle_employee_id"){
+			querydata={
+					vehicle_employee_id:$("#querytext").val()
+			}			
+		}else if(thebtn.data("type")=="vehicle_state"){
+			querydata={
+					vehicle_state:$("#querytext").val()
+			}			
+		}
+		
+		$.post("queryVehicleMssg",querydata,
+			    function(data,status){
+					//将返回的数据写到页面
+					writerData(data);
+			    });
+	});
+	
+	
+	
+</script>	        		
+	    	    

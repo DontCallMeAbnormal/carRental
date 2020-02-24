@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.tongRenCollege.dao.mapper.Orderdetail">
+
+
+	<resultMap type="Orderdetail" id="Orderdetail">
+			<id column="order_id"  property="order_id"/>
+			<result column="order_price" property="order_price"/>
+			<result column="order_state" property="order_state"/>
+			<result column="order_vehicle_id" property="order_vehicle_id"/>
+			<result column="order_startDate" property="order_startDate"/>
+			<result column="order_stopDate" property="order_stopDate"/>
+			<result column="order_quantity" property="order_quantity"/>
+			<association property="user">
+				<id column="order_user_id" property="user_id"/>
+				<result column="user_name" property="user_name" />
+				<result column="user_phone" property="user_phone"/>
+			</association>
+			<association property="employee">
+				<id column="employee_id" property="employee_id"/>
+				<result column="employee_name" property="employee_name" />
+				<result column="employee_phone" property="employee_phone"/>
+			</association>
+			<association property="vehicleFull" javaType="VehicleFull" resultMap="VehicleFull"/>
+		</resultMap>
+		
+	<resultMap type="VehicleFull" id="VehicleFull">
+			<id column="vehicle_id" property="vehicle_id"/>
+			<result	column="vehicle_base_id" property="vehicle_base_id"/>
+			<result	column="vehicle_employee_id" property="vehicle_employee_id"/>
+			<result	column="vehicle_price" property="vehicle_price"/>
+			<result	column="vehicle_describe" property="vehicle_describe"/>
+			<result	column="vehicle_mileage" property="vehicle_mileage"/>
+			<result	column="vehicle_condition" property="vehicle_condition"/>
+			<result	column="vehicle_state" property="vehicle_state"/>
+			<association property="base" javaType="Base">
+				<id column="base_id" property="base_id" />
+				<result	column="base_photo" property="base_photo"/>
+				<result	column="base_type" property="base_type"/>
+				<result	column="base_brand" property="base_brand"/>
+				<result	column="base_model" property="base_model"/>
+				<result	column="base_produced" property="base_produced"/>
+				<result	column="base_displacement" property="base_displacement"/>
+				<result	column="base_speed" property="base_speed"/>
+			</association>
+		</resultMap>
+
+
+
+
+
+</mapper>

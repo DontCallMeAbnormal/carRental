@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<!-- Ioc注解解析 -->
+	<context:component-scan base-package="cn.tongRenCollege" />
+	<!-- DI 注解解析 -->
+	<context:annotation-config />
+	
+	<!-- 引入其他配置文件 -->
+	<import resource="classpath:spring/applicationConfiguration-dao.xml"/>
+	
+	<import resource="classpath:spring/applicationConfiguration-web.xml"/>
+	
+	
+	
+	<!-- 自定义的工具类 -->
+		<!-- 保存全局的变量,的工具类
+			imgePath: 保存图片在服务器中的路径
+			diskImgePath: 保存图片在磁盘中的路径
+		 -->
+		<bean class="cn.tongRenCollege.util.SelvetContext">
+			<property name="imgePath" value="static\photo\" />
+			<property name="diskImgePath" value="D:\graduation project\photobackup\"></property>
+		</bean>
+		
+		<!-- 将磁盘的图片复制到服务器中 -->
+		<bean class="cn.tongRenCollege.util.CopyPhoto" />
+	
+	
+	
+	<!-- 文件上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <property name="defaultEncoding" value="utf-8"/>
+	    <property name="maxUploadSize" value="#{1024*1024}"/>
+	</bean>
+</beans>

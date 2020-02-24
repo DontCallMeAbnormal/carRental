@@ -1,0 +1,341 @@
+<meta charset="utf-8">
+<div id="page-inner">
+		<div class="panel panel-default">
+		  <!-- Default panel contents -->
+		  <div class="panel-heading">
+		  		<h1 class="page-header">
+                   <font style="vertical-align: inherit;">
+                  	 	<font style="vertical-align: inherit;">员工管理中心</font>
+                   </font>
+                   <small>
+	                   <font style="vertical-align: inherit;">
+	                  		<font style="vertical-align: inherit;">信息表</font>
+	                   </font>
+                   </small>
+                   </h1>
+          </div>
+		  <div class="panel-body">
+		    <p>
+		    	<div class="input-group" style="width: 50%;float: left;">
+				  <input type="text" id="querytext" placeholder="按名称查询" class="form-control"  >
+				  <div class="input-group-btn" >
+				    <button type="button" id="querybtn" data-type="employee_name" class="btn btn-default">查询</button>
+				    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		              <span class="caret"></span>
+		              <span class="sr-only">Toggle Dropdown</span>
+		            </button>
+		            <ul class="dropdown-menu dropdown-menu-right">
+		              <li><a  class="choose" data-type="employee_name" data-text="按名称查询" >按名称<i class="glyphicon glyphicon-ok choose-ico"></i></a></li>
+		              <li><a  class="choose" data-type="employee_id" data-text="按工号查询">按工号<i></i></a></li>
+		              <li><a  class="choose" data-type="employee_phone" data-text="按电话查询">按电话<i></i></a></li>
+		              <li><a  class="choose" data-type="employee_state" data-text="按状态查询">按状态<i></i></a></li>
+		            </ul>
+				  </div>
+				</div>
+		    	<button onclick="getData()" style="float: right" class="btn btn-default"><i class=" fa fa-refresh "></i>&nbsp更新资料</button>
+		   		<button onclick=" addEmployee()" style="float: right" class="btn btn-default"><i class=" glyphicon glyphicon-plus "></i>&nbsp新增员工</button>
+		    </p>
+		  </div>
+		
+		  <!-- Table -->
+		  <table class="table table-striped">
+		    <thead>
+		    	<tr>
+		    		<th>工号</th>
+		    		<th>姓名</th>
+		    		<th>电话</th>
+		    		<th>状态</th>
+		    		<th>操作</th>
+		    	</tr>
+		    </thead>
+		    <tbody id="dataBox">
+		    	<tr>
+		    		<td>32131</td>
+		    		<td>李志强</td>
+		    		<td>1578492852</td>
+		    		<td>下班</td>
+		    		<td></td>
+		    	</tr>
+		    </tbody>
+		  </table>
+		</div>
+		
+		
+		
+		<!-- 模态框 -->
+		<!-- 删除模态框 -->
+		<div id="delete_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-sm" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >删除</h4>
+			     </div>
+			     <div class="modal-body">
+			        	确定要删除该员工吗
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        <button id="delete_btn" type="button" class="btn btn-danger">删除</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>
+		
+		
+		<!-- 修改模态框 -->
+		<div id="updata_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-sm" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >更改</h4>
+			     </div>
+			     <div class="modal-body">
+			        	<form role="form">
+			        		<div class="form-group">
+			        			<label>姓名</label>
+			        			<input class="form-control" id="employee_name" placeholder="修改姓名">
+			        		</div>
+			        		<div class="form-group">
+			        			<label>电话</label>
+			        			<input class="form-control" id="employee_phone" placeholder="修改电话">
+			        		</div>
+			        	</form>
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        <button id="updata_btn" type="button" class="btn btn-info">提交</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>
+		
+		
+		
+		
+	<!-- 新增模态框 -->
+		<div id="add_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-sm" role="document">
+		    <div class="modal-content">
+		     	 
+		     	 <div class="modal-header">
+			        <button type="button"  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" >新增员工</h4>
+			     </div>
+			     <div class="modal-body">
+			        	<form role="form">
+			        		<div class="form-group">
+			        			<label>姓名</label>
+			        			<input  class="form-control" id="add_employee_name" placeholder="姓名">
+			        		</div>
+			        		<div class="form-group">
+			        			<label>电话</label>
+			        			<input class="form-control" id="add_employee_phone" placeholder="电话">
+			        		</div>
+			        		<div class="form-group">
+			        			<label>密码</label>
+			        			<input class="form-control" id="add_employee_pwd" placeholder="密码">
+			        		</div>
+			        	</form>
+			    </div>
+		     	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        <button id="add_btn" onclick="postadd()" type="button" class="btn btn-info">提交</button>
+			    </div>
+		    </div>
+		  </div>
+		</div>	
+		
+		
+		
+</div>
+<script type="text/javascript">
+	
+	//如果staffMgContext为空则请求数据
+	if(staffMgContext=="" || staffMgContext==null){
+		getData();
+	}else{
+		writerData(staffMgContext);
+	}
+	
+	
+	//ajax获取员工信息数据
+	function getData(){
+		$.get("queryEmpMssg",function(data,status){
+			 staffMgContext=data;
+			 writerData(staffMgContext);
+		});
+	}
+	
+	//将数据写入页面
+	function writerData(data){
+		var dataBox=$("#dataBox");
+		var htmlStr="";
+		var employee_id;
+    	var employee_name;
+    	var employee_phone;
+    	var employee_state;
+	    for(var i=0;i<data.length;i++){
+	    	employee_id=data[i].employee_id;
+	    	employee_name=data[i].employee_name;
+	    	employee_phone=data[i].employee_phone;
+	    	employee_state=data[i].employee_state;
+	    	
+	    	if(employee_state=='在岗'){
+	    		htmlStr+='<tr style="background: #bae08e;">'+
+	    		'<td>'+employee_id+'</td>'+
+	    		'<td>'+employee_name+'</td>'+
+	    		'<td>'+employee_phone+'</td>'+
+	    		'<td>'+employee_state+'</td>'+
+	    		'<td><button class="btn btn-primary" onclick="updataEmployee(\''+employee_id+'\')" ><i class="fa fa-edit "></i>&nbsp编辑</button>'+
+	    		'<button class="btn btn-danger" onclick="deleteEmployee(\''+employee_id+'\')"><i class="fa fa-pencil "></i>&nbsp删除</button>'+
+		    		'</td>'+
+		    	'</tr>';
+	    	}else{
+	    		htmlStr+='<tr>'+
+	    		'<td>'+employee_id+'</td>'+
+	    		'<td>'+employee_name+'</td>'+
+	    		'<td>'+employee_phone+'</td>'+
+	    		'<td>'+employee_state+'</td>'+
+	    		'<td><button class="btn btn-primary" onclick="updataEmployee(\''+employee_id+'\')" ><i class="fa fa-edit "></i>&nbsp编辑</button>'+
+	    		'<button class="btn btn-danger" onclick="deleteEmployee(\''+employee_id+'\')"><i class="fa fa-pencil "></i>&nbsp删除</button>'+
+		    		'</td>'+
+		    	'</tr>';
+	    	}
+	    	
+	    	
+	    }
+	    dataBox.html(htmlStr);
+		
+	}
+	
+	
+	//删除方法
+	function deleteEmployee(employee_id){
+		console.log("删除id"+employee_id);
+		$('#delete_modal').modal();
+		$('#delete_btn').attr({
+			"onclick":"postDelete(\'"+employee_id+"\')"
+		});
+	}
+	//删除提交
+	function postDelete(employee_id){
+		var postdata={
+				id:employee_id
+		};
+		commitdata("deleteEmployee",postdata,"delete_modal");
+	}
+	
+	
+	//ajax方法封装
+	function commitdata(commiturl,commitdata,modalId){
+		var postupdata=commitdata;
+		$.ajax({
+			url:commiturl,
+			async:false,
+			type:"POST",
+			data:commitdata,
+			success:function(result){
+				//响应成功则关闭模态框
+				if(result!="success"){
+					alert(result);
+				}
+				$('#'+modalId).modal('hide');
+				//响应成功刷新数据
+				getData();
+			},
+			error:function(xhr){
+				alert("失败,请重试"+xhr.status);
+				return;
+			}
+		
+		});
+		
+	}
+	
+	//修改方法
+	function updataEmployee(employee_id){
+		$('#updata_modal').modal();
+		$('#updata_btn').attr({
+			"onclick":"postupdata("+employee_id+")"
+		});
+	}
+	//修改提交
+	function postupdata(employee_id){
+		var postupdata={
+				employee_id:employee_id,
+				employee_name:$("#employee_name").val(),
+				employee_phone:$("#employee_phone").val()
+		};
+		commitdata("updataEmployee",postupdata,"updata_modal");
+		
+	}
+	
+	
+
+	//新增方法
+	function addEmployee(){
+		$('#add_modal').modal();//打开模态框
+	}
+	//新增提交
+	function postadd(){
+		var postupdata={
+				employee_name:$("#add_employee_name").val(),
+				employee_phone:$("#add_employee_phone").val(),
+				employee_pwd:$("#add_employee_pwd").val()
+		};
+		commitdata("addEmployee",postupdata,"add_modal");
+	}
+	
+	
+	//查询的下拉按钮的 后面的钩 切换函数
+	$(".choose").click(function(){
+		var thebtn = $(this);
+		var i = thebtn.children("i")[0];
+		var choosebtnes=$(".choose");
+		for(var cont=0;cont < choosebtnes.length ;cont++){
+			var ii=$(choosebtnes[cont]).children("i")[0];
+			$(ii).attr("class","");
+		}
+		
+		$(i).attr("class","glyphicon glyphicon-ok choose-ico");
+		//修改输入框的提示内容
+		$("#querytext").attr("placeholder",thebtn.data("text"));
+		//修改提交按钮的data-type
+		$("#querybtn").data("type",thebtn.data("type"));
+	});
+	//查询/按名字/按电话/按工号/按状态
+	$("#querybtn").click(function(){
+		var thebtn = $(this);
+		var querydata;
+		if(thebtn.data("type")=="employee_id"){
+			querydata={
+					employee_id:$("#querytext").val()
+			}
+		}else if(thebtn.data("type")=="employee_name"){
+			querydata={
+					employee_name:$("#querytext").val()
+			}			
+		}else if(thebtn.data("type")=="employee_phone"){
+			querydata={
+					employee_phone:$("#querytext").val()
+			}			
+		}else if(thebtn.data("type")=="employee_state"){
+			querydata={
+					employee_state:$("#querytext").val()
+			}			
+		}
+		
+		$.post("queryEmployeeTerm",querydata,
+			    function(data,status){
+					//将返回的数据写到页面
+					writerData(data);
+			    });
+	});
+	
+	
+	
+</script>

@@ -1,0 +1,155 @@
+body,html{
+	margin: 0px;
+	padding: 0px;
+	background: #ececec;
+}
+
+/*----------------------------------------*/
+/*                 Header                 */
+/*-----------------------------------------*/
+#logo{
+	display: block;
+	cursor: pointer;
+	height: 90px;
+	line-height:90px;
+	margin: 20px 0;
+	float: left;
+}
+#search-box{
+	height: 90px;
+	margin: 20px 0;
+	text-align:right;
+	float: right;
+}
+/*----------------------------------------*/
+/*                 middlepanel             */
+/*-----------------------------------------*/
+.brand_footer{
+	margin-bottom: 50px;
+}
+.brand_footer .price_lefttext{
+	float: left;
+}
+.brand_footer .price_color{
+	color: #2196f3;
+}
+.brand_footer button{
+	margin-left: 5px;
+	float: right;
+}
+
+/*蓝色带下划线小标题*/
+.title_h3_bule{
+	border-bottom: 1px solid #00BCD4;
+	padding-bottom: 10px;
+	color: #03A9F4;
+}
+
+/*黑色带下划线小标题*/
+.title_h3_black{
+	border-bottom: 1px solid #333;
+	padding-bottom: 10px;
+	color: #333;
+}
+
+.text_p_gray{
+	color: #8c8c8c;
+}
+.text_p_gray p{
+	color: #8c8c8c;
+}
+
+/*--------------------------------*/
+/*       middlepanel / 详细信息    */
+/*-------------------------------*/
+.vhicle{
+	margin-bottom: 20px;
+}
+
+.vhicle .price{
+	color:#ff5722;
+}
+.vhicle .employee_phone{
+	color: #8c8c8c;
+}
+
+.info_list{
+	font-size: 15px;
+}
+.info_list .icon{
+	color: #00BCD4;
+}
+
+
+/*----------------------------------------*/
+/*                footer                  */
+/*-----------------------------------------*/
+
+.coustom_footer{
+	background: #2a2730;
+	padding: 50px 10px;
+}
+.coustom_footer hr{
+	border-color: rgb(107, 107, 107);
+}
+.coustom_footer .footer_title{
+	color: #ececec;
+}
+.coustom_footer .footer_text{
+	color: #8c8c8c;
+}
+.coustom_footer .footer_text .light{
+	color: #eee;
+}
+
+.coustom_footer .footer_text .right{
+	float: right;
+}
+
+
+.coustom_footer .footer_line{
+	color: #8c8c8c;
+}
+
+
+
+
+
+
+
+
+
+
+/********************************/
+/*			字体				*/
+/********************************/
+@font-face {
+	font-family: 'index-icon';  /* project id 1654032 */
+	src: url('//at.alicdn.com/t/font_1654032_nkifghupgbc.eot');
+	src: url('//at.alicdn.com/t/font_1654032_nkifghupgbc.eot?#iefix') format('embedded-opentype'),
+	url('//at.alicdn.com/t/font_1654032_nkifghupgbc.woff2') format('woff2'),
+	url('//at.alicdn.com/t/font_1654032_nkifghupgbc.woff') format('woff'),
+	url('//at.alicdn.com/t/font_1654032_nkifghupgbc.ttf') format('truetype'),
+	url('//at.alicdn.com/t/font_1654032_nkifghupgbc.svg#iconfont') format('svg');
+  }
+
+.index-icon{
+    font-family:"index-icon" !important;
+    font-size:20px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
+/********************************/
+/*			测试				*/
+/********************************/
+.test{
+	background-color: aquamarine;
+	height: 200px;
+}
+.test2{
+	background-color:#8c8c8c;
+	height: 200px;
+}
