@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!DOCTYPE html >
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>汽车租赁系统</title>
-
+	<script type="text/javascript">
+		var ctxPath  = [[@{/}]];
+	</script>
     <!-- Bootstrap -->
-    <link href="static/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="static/css/index.css" rel="stylesheet" >
-	<link href="static/css/plugin/slideshow.css" rel="stylesheet" >
+    <link th:href="@{/static/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/static/css/index.css}" rel="stylesheet" >
+	<link th:href="@{/static/css/plugin/slideshow.css}" rel="stylesheet" >
 	
 	<link href="static/css/font-awesome.css" rel="stylesheet">
     <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
@@ -30,7 +32,7 @@
 		
 		<header>
 			<div style="height: 130px">
-				<a id="logo"><img alt="汽车租赁" src="static/photo/Carbrand.png"></a>
+				<a id="logo"><img alt="汽车租赁" th:src="@{/static/photo/Carbrand.png}"></a>
 				<div id="search-box">
 					<font style="color: #e91e63">
 						<span class="glyphicon glyphicon-earphone" >&emsp;157-0854-7401</span>
@@ -53,7 +55,7 @@
 				<div class="container-fluid">
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li class="active"><a href="#">首页<span class="sr-only">(current)</span></a></li>
+							<li class="active"><a th:href="@{/index.html}">首页<span class="sr-only">(current)</span></a></li>
 							<li><a href="#">新闻</a></li>
 							<li><a href="#">销售代表</a></li>
 							<li><a href="#">联系</a></li>
@@ -69,46 +71,12 @@
 		<!-- top panel -->
 		<div class="panel panel-default">
 		  <div class="panel-body">
-		  		<!-- 轮播图 -->
-		    	<div class="wrap">
-					<div class="pic1 pic">
-						<div class="pic_num1 pic_num" style="display: block;"></div>
-						<div class="slideshow_text" >
-							
-							<h3>
-								众泰	T800
-								<br><small>1.9L</small><small>200km/h</small><small>suv</small>
-								<font><span class="glyphicon glyphicon-yen"></span>100</font><small>元/天</small>
-							</h3>
-							
-						</div>
-					</div>
-					<div class="pic2 pic" style="left: 91px;">
-						<div class="pic_num2 pic_num" style="display: block;"></div>
-						<div class="slideshow_text" >
-							
-							<h3>
-								宝马	M系 2016款 M2
-								<br><small>3.0L</small><small>370km/h</small><small>跑车</small>
-								<font><span class="glyphicon glyphicon-yen"></span>200</font><small>元/天</small>
-							</h3>
-						
-						</div>
-					</div>
-					<div class="pic3 pic" style="left: 182px;">
-						<div class="pic_num3 pic_num" style="display: block;"></div>
-						<div class="slideshow_text" >
-						
-							<h3>
-								奔驰	2018款 S 450 L 4MATIC
-								<br><small>3.0L</small><small>376km/h</small><small>跑车</small>
-								<font><span class="glyphicon glyphicon-yen"></span>150</font><small>元/天</small>
-							</h3>
-						
-						</div>
-					</div>
-				</div>
-				<!-- /轮播图 -->
+			<ol class="breadcrumb">
+				<li><a href="index.html">首页</a></li>
+				<li class="active">全部</li>
+			</ol>	
+
+
 				<hr style="border-top:2px solid #9e9e9e;">
 				<h2 style="margin-bottom: 10px;">快速搜索</h2>
 				<form>
@@ -203,48 +171,36 @@
 		
 		<!-- middel panel-->
 		<div class="panel panel-default">
-			<div class="container-fluid" style="padding-bottom: 20px">
+			<div class="container-fluid">
 				<!--left panel-->
 				<div class="col-md-9 panel-left">
-					<h3 class="panel-heading">最新车品
-
-						<a href="queryVehicleList" style="float: right;font-size: 15px;display: block;height: 26px;line-height: 26px;">更多>></a>
+					<h3 class="panel-heading">全部车品
+					
+					<span style="float: right;font-size: 15px;display: block;height: 26px;line-height: 26px;">租金由低到高</span>
+					<!-- 
+						写到这里
+						下一步:写快速查询
+					
+					 -->
+					
+					
 					</h3>
+					
 					<hr style="border-bottom: 1px solid #e4e4e4;">
 
-						<div class="row" id="latest_product_box">
+						<div class="row" >
 
-							<div class="col-md-4 col-sm-6">
+							<div class="col-sm-6" th:each="vehicle:${vfs}">
 								<div class="thumbnail">
-									<img src="static/photo/20200114031040.png" alt="null">
+									<img th:src="@{/}+${vehicle.base.base_photo}" alt="null">
 									<div class="caption">
-										<h4>宝马 2019
-											<p>
-												<small>2016-8-31|1.2万公里|跑车</small>
-											</p>
+										<h4 th:text="${vehicle.base.base_brand}+' '+${vehicle.base.base_model}" >宝马 2019
 										</h4>
+										<h4><small th:text="${vehicle.base.base_produced}+' | '+${vehicle.vehicle_mileage}+'万公里 | ' +   ${vehicle.base.base_type}   " >2016-8-31|1.2万公里|跑车</small></h4>
+										
+										
 										<div class="brand_footer">
-											<h4 class="price_lefttext"><span class="price_color">100</span>元/天</h4>
-											<button onclick="placeorder(i)" class="btn btn-success">下单</button>
-											<button onclick="details(i)" class="btn btn-info">详情</button>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-
-
-							<div class="col-md-4 col-sm-6">
-								<div class="thumbnail">
-									<img src="static/photo/20200114031040.png" alt="null">
-									<div class="caption">
-										<h4>宝马 2019
-											<p>
-												<small>2016-8-31|1.2万公里|跑车</small>
-											</p>
-										</h4>
-										<div class="brand_footer">
-											<h4 class="price_lefttext"><span class="price_color">100</span>元/天</h4>
+											<h4 class="price_lefttext"><span class="price_color" th:text="${vehicle.vehicle_price}">100</span>元/天</h4>
 											<button class="btn btn-success">下单</button>
 											<button class="btn btn-info">详情</button>
 										</div>
@@ -253,24 +209,7 @@
 								
 							</div>
 
-							<div class="col-md-4 col-sm-6">
-								<div class="thumbnail">
-									<img src="static/photo/20200114031040.png" alt="null">
-									<div class="caption">
-										<h4>宝马 2019
-											<p>
-												<small>2016-8-31|1.2万公里|跑车</small>
-											</p>
-										</h4>
-										<div class="brand_footer">
-											<h4 class="price_lefttext"><span class="price_color">100</span>元/天</h4>
-											<button class="btn btn-success">下单</button>
-											<button class="btn btn-info">详情</button>
-										</div>
-									</div>
-								</div>
-								
-							</div>
+							
 
 						</div>
 
@@ -308,6 +247,33 @@
 						</div>
 					</div>
 
+					<h3 class="panel-heading">优品良车</h3>
+					<div class="media">
+						<div class="media-left">
+						  <a href="#">
+							<img width="80" class="media-object" src="static/photo/20200115190546.png" alt="...">
+						  </a>
+						</div>
+						<div class="media-body">
+						  <h4 class="media-heading">(vehicle_base_brand)宝马 2019</h4>
+						  <p>
+							  (vehicle_describe)超级实惠,快来使用
+						  </p>
+						</div>
+					</div>
+					<div class="media">
+						<div class="media-left">
+						  <a href="#">
+							<img width="80" class="media-object" src="static/photo/20200115190546.png" alt="...">
+						  </a>
+						</div>
+						<div class="media-body">
+						  <h4 class="media-heading">(vehicle_base_brand)宝马 2019</h4>
+						  <p>
+							  (vehicle_describe)超级实惠,快来使用
+						  </p>
+						</div>
+					</div>
 
 				</div>
 
@@ -383,10 +349,16 @@
 		</footer>
 		
 	</div>
+	<input th:value="${vfs}" id="test" >
 </div>
-<script type="text/javascript" src="static/lib/jquery.min.js"></script>
-<script type="text/javascript" src="static/js/plugin/slideshow.js"></script>
-<script type="text/javascript" src="static/js/index.js"></script>
+<script type="text/javascript" th:src="@{/static/lib/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/plugin/slideshow.js}"></script>
+<script type="text/javascript">
+
+console.log($("#test").val())
+
+</script>
+
 
 </body>
 </html>

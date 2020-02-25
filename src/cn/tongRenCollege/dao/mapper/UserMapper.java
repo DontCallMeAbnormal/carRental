@@ -68,4 +68,18 @@ public interface UserMapper {
 	 */
 	public List<VehicleFull> queryVehicleFullAll(String colName,String DescAsc);
 	
+	/**
+	 * 查询最近的记录
+	 * @param num
+	 * @return
+	 */
+	public List<VehicleFull> queryVehicleFullByNewNum (int num);
+	
+	/**
+	 * 查询指定id的车辆详细信息
+	 * @param id
+	 * @return
+	 */
+	public VehicleFull getVehicleFullById(String id);
+	
 }

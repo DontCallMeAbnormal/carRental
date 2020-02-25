@@ -67,6 +67,11 @@
  			SELECT * FROM `employee` WHERE (employee_id=#{arg0} AND employee_pwd=#{arg1}) or (employee_phone=#{arg0} and employee_pwd=#{arg1});
  		</select>
  		
+ 		<select id="selectEmployee" parameterType="String" resultType="Employee">
+ 			SELECT employee_id,employee_name,employee_phone,employee_state FROM employee WHERE employee_id=#{value};
+ 		</select>
+ 		
+ 		
  		<!-- 用户 -->
  		<select id="getUserById" parameterType="String" resultType="User">
  			SELECT * FROM `user` WHERE user_id=#{value};

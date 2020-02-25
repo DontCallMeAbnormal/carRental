@@ -18,6 +18,14 @@ public interface EmployeeMapper {
 	public Employee getEmployee(String idOrNumber,String password);
 	
 	/**
+	 * 通过id 查询员工的电话和姓名
+	 * @param id
+	 * @return
+	 */
+	public Employee selectEmployee(String id);
+	
+	
+	/**
 	 * 上班打卡,修改状态为在岗
 	 * @param employee_id
 	 */

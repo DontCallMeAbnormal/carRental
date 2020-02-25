@@ -78,6 +78,15 @@
 	<select id="queryVehicleFullAll" parameterType="String" resultMap="VehicleFull">
 			<include refid="cn.tongRenCollege.dao.mapper.AdmMapper.queryVehicleFullAllSql"/>
 	</select>
+	
+	<select id="queryVehicleFullByNewNum" resultMap="cn.tongRenCollege.dao.mapper.AdmMapper.VehicleFull">
+			SELECT * FROM `vehicle` v INNER JOIN `base` b ON v.vehicle_base_id=b.base_id ORDER BY v.vehicle_id DESC limit 0,${value};
+	</select>
+	
+	<select id="getVehicleFullById" parameterType="String" resultMap="VehicleFull">
+		<include refid="cn.tongRenCollege.dao.mapper.AdmMapper.getVehicleFullByIdsql"/>
+	</select>
+	
 	<resultMap type="VehicleFull" id="VehicleFull">
 			<id column="vehicle_id" property="vehicle_id"/>
 			<result	column="vehicle_base_id" property="vehicle_base_id"/>

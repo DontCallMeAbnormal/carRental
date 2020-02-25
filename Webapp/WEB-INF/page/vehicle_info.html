@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!DOCTYPE html >
+<html lang="zh-CN"  xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,12 +7,20 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>汽车租赁系统</title>
 
+	<script type="text/javascript">
+		var ctxPath  = [[@{/}]];
+	</script>
+
+
     <!-- Bootstrap -->
-    <link href="static/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="static/css/index.css" rel="stylesheet" >
-	<link href="static/css/plugin/slideshow.css" rel="stylesheet" >
+    <link th:href="@{/static/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css}" href="static/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link th:href="@{/static/css/index.css}" href="static/css/index.css" rel="stylesheet" >
+	<link th:href="@{/static/css/plugin/slideshow.css}" href="static/css/plugin/slideshow.css" rel="stylesheet" >
 	
-	<link href="static/css/font-awesome.css" rel="stylesheet">
+	<link th:href="@{/static/css/font-awesome.css}" href="static/css/font-awesome.css" rel="stylesheet">
+	
+	
+
     <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
     <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
     <!--[if lt IE 9]>
@@ -30,7 +38,7 @@
 		
 		<header>
 			<div style="height: 130px">
-				<a id="logo"><img alt="汽车租赁" src="static/photo/Carbrand.png"></a>
+				<a id="logo"><img alt="汽车租赁" th:src="@{/static/photo/Carbrand.png}"></a>
 				<div id="search-box">
 					<font style="color: #e91e63">
 						<span class="glyphicon glyphicon-earphone" >&emsp;157-0854-7401</span>
@@ -52,7 +60,7 @@
 				<div class="container-fluid">
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li><a href="#">首页<span class="sr-only">(current)</span></a></li>
+							<li><a th:href="@{/index.html}">首页<span class="sr-only">(current)</span></a></li>
 							<li><a href="#">新闻</a></li>
 							<li><a href="#">销售代表</a></li>
 							<li><a href="#">联系</a></li>
@@ -69,21 +77,21 @@
 		<div class="panel panel-default">
 		  	<div class="panel-body" >
 				<ol class="breadcrumb">
-					<li><a href="#">首页</a></li>
+					<li><a th:href="@{/index.html}">首页</a></li>
 					<li class="active">详情</li>
 				</ol>	  
 				
 				<!--汽车图片-->
 				<div class="col-md-6 vhicle">
-					<img class="img-responsive" src="/static/photo/20200114031040.png" alt="图片失效"/>
+					<img class="img-responsive" th:src ="@{/}+${vehicle.base.base_photo}" src="static/photo/20200114031040.png" alt="图片失效"/>
 
 				</div>
-
+				
 				<!--汽车相关信息-->
 				<div class="col-md-6 vhicle">
-					<h2 id="vehicle_base_brand">宝马 2019款 青春运动版</h2>
-					<h3 class="price"><span class="glyphicon glyphicon-yen"></span> <span id="vahicle_price">100</span>元/天</h3>
-					<h5 class="employee_phone"><span class="glyphicon glyphicon-user"></span>&emsp;联系客服(电话):<span id="employee_phone">13235365347</span></h5>
+					<h2 id="vehicle_base_brand" th:text="${vehicle.base.base_brand}+' '+${vehicle.base.base_model}" >宝马 2019款 青春运动版</h2>
+					<h3 class="price"><span class="glyphicon glyphicon-yen"></span> <span id="vahicle_price" th:text="${vehicle.vehicle_price}" >100</span>元/天</h3>
+					<h5 class="employee_phone"><span class="glyphicon glyphicon-user"></span>&emsp;联系客服(电话):<span id="employee_phone" th:text="${employee.employee_phone}+' '+${employee.employee_name}" >13235365347</span></h5>
 
 					<hr>
 					<h3 class="title_h3_bule">基本信息</h3>
@@ -91,32 +99,31 @@
 						<div class="col-md-6">
 							<span class="index-icon icon">&#xe63a;</span>
 							<span>品&emsp;牌:&emsp;</span>
-							<span id="vehicle_base_brand">宝马</span>
+							<span id="vehicle_base_brand" th:text="${vehicle.base.base_brand}" >宝马</span>
 						</div>
 						<div class="col-md-6">
 							<span class="index-icon icon">&#xe629;</span>
 							<span>车&emsp;型:&emsp;</span>
-							<span id="vehicle_base_type">suv</span>
+							<span id="vehicle_base_type" th:text="${vehicle.base.base_type}" >suv</span>
 						</div>
 						<div class="col-md-6">
 							<span class="index-icon icon">&#xe826;</span>
 							<span>上市时间:&emsp;</span>
-							<span id="vehicle_base_porduced">2016-8-31</span>
+							<span id="vehicle_base_produced" th:text="${vehicle.base.base_produced}" >2016-8-31</span>
 						</div>
 						<div class="col-md-6">
 							<span class="index-icon icon">&#xe623;</span>
 							<span>排&emsp;量:&emsp;</span>
-							<span id="vehicle_base_displacement">2.0L</span>
+							<span id="vehicle_base_displacement" th:text="${vehicle.base.base_displacement}+'L'">2.0L</span>
 
 						</div>
 						<div class="col-md-6">
 							<span class="index-icon icon">&#xe603;</span>
 							<span>速&emsp;度:&emsp;</span>
-							<span id="vehicle_base_speed">260km/h</span>
+							<span id="vehicle_base_speed" th:text="${vehicle.base.base_speed}+'km/h'" >260km/h</span>
 						</div>
-						<div class="col-md-6">
-
-						</div>
+						
+						
 						
 						
 					</div>
@@ -126,20 +133,27 @@
 						<div class="col-md-6">
 							<span class="index-icon icon">&#xe61f;</span>
 							<span>里&emsp;程:&emsp;</span>
-							<span id="vehicle_mileage">1.2万公里</span>
+							<span id="vehicle_mileage" th:text="${vehicle.vehicle_mileage}+'万公里' ">1.2万公里</span>
 						</div>
 						<div class="col-md-6">
 							
-							<span class="index-icon icon">&#xe61f;</span>
+							<span class="index-icon icon">&#xe628;</span>
 							<span>新旧程度:&emsp;</span>
-							<span id="vehicle_condition">9成新</span>
+							<span id="vehicle_condition" th:text="${vehicle.vehicle_condition}+'成新'" >9成新</span>
 								
 						</div>
 						
 
 					</div>
 
+					<hr>
 					
+					<div class="col-xs-12">
+						<button class="btn btn-success center-block" style="    letter-spacing: 10px;
+						font-size: 20px;
+						text-indent: 10px;
+						padding: 10px 20px;">立即预订</button>
+					</div>
 					
 
 
@@ -185,6 +199,9 @@
 					
 				</div>
 
+
+
+
 			</div>
 
 
@@ -200,13 +217,16 @@
 			<div class="container-fluid">
 				<!--left panel-->
 				<div class="panel-body">
-					<h3 class="panel-heading">相关车品</h3>
+					<h3 class="panel-heading">
+						相关车品
+						<a href="#" style="float: right;font-size: 15px;display: block;height: 26px;line-height: 26px;">更多>></a>
+					</h3>
 					<hr style="border-bottom: 1px solid #e4e4e4;">
 
 						<div class="row">
 							<div class="col-md-4 col-sm-6">
 								<div class="thumbnail">
-									<img src="/static/photo/20200114031040.png" alt="null">
+									<img src="static/photo/20200114031040.png" alt="null">
 									<div class="caption">
 										<h4>宝马 2019
 											<p>
@@ -226,7 +246,7 @@
 
 							<div class="col-md-4 col-sm-6">
 								<div class="thumbnail">
-									<img src="/static/photo/20200114031040.png" alt="null">
+									<img src="static/photo/20200114031040.png" alt="null">
 									<div class="caption">
 										<h4>宝马 2019
 											<p>
@@ -245,7 +265,7 @@
 
 							<div class="col-md-4 col-sm-6">
 								<div class="thumbnail">
-									<img src="/static/photo/20200114031040.png" alt="null">
+									<img src="static/photo/20200114031040.png" alt="null">
 									<div class="caption">
 										<h4>宝马 2019
 											<p>
@@ -339,9 +359,15 @@
 
 		</footer>
 		
+		<input type="hidden" th:value="${vehicle}" id="staff_name2"/>
+
 	</div>
 </div>
-<script type="text/javascript" src="static/lib/jquery.min.js"></script>
-<script type="text/javascript" src="static/js/plugin/slideshow.js"></script>
+<script type="text/javascript" th:src="@{/static/lib/jquery.min.js}" src="static/lib/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/static/js/plugin/slideshow.js}" src="static/js/plugin/slideshow.js"></script>
+<script type="text/javascript">
+
+
+</script>
 </body>
 </html>

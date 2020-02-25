@@ -28,7 +28,7 @@ body,html{
 	margin-bottom: 50px;
 }
 .brand_footer .price_lefttext{
-	float: left;
+	
 }
 .brand_footer .price_color{
 	color: #2196f3;
@@ -38,14 +38,18 @@ body,html{
 	float: right;
 }
 
-/*蓝色带下划线小标题*/
+.showpanel{
+	padding: 0px;
+}
+
+/*钃濊壊甯︿笅鍒掔嚎灏忔爣棰�*/
 .title_h3_bule{
 	border-bottom: 1px solid #00BCD4;
 	padding-bottom: 10px;
 	color: #03A9F4;
 }
 
-/*黑色带下划线小标题*/
+/*榛戣壊甯︿笅鍒掔嚎灏忔爣棰�*/
 .title_h3_black{
 	border-bottom: 1px solid #333;
 	padding-bottom: 10px;
@@ -60,7 +64,7 @@ body,html{
 }
 
 /*--------------------------------*/
-/*       middlepanel / 详细信息    */
+/*       middlepanel / 璇︾粏淇℃伅    */
 /*-------------------------------*/
 .vhicle{
 	margin-bottom: 20px;
@@ -121,7 +125,7 @@ body,html{
 
 
 /********************************/
-/*			字体				*/
+/*			瀛椾綋				*/
 /********************************/
 @font-face {
 	font-family: 'index-icon';  /* project id 1654032 */
@@ -143,7 +147,7 @@ body,html{
 
 
 /********************************/
-/*			测试				*/
+/*			娴嬭瘯				*/
 /********************************/
 .test{
 	background-color: aquamarine;

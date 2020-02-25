@@ -14,5 +14,26 @@
     <mvc:default-servlet-handler/>
 	
 	
+	<!-- thymeleaf的视图解析器 -->
+	<!-- 模板解析器  -->
+    <bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+        <property name="prefix" value="/WEB-INF/page" /><!-- 路径前缀 -->
+        <property name="suffix" value=".html" /><!-- 路径后缀 -->
+        <property name="templateMode" value="HTML5" />
+        <property name="cacheable" value="false" />
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+
+    <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+
+    <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <property name="characterEncoding"  value="UTF-8" />
+    </bean>
+	
+	
+	
 	
 </beans>
