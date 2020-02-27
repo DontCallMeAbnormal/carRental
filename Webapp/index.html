@@ -58,6 +58,16 @@
 							<li><a href="#">销售代表</a></li>
 							<li><a href="#">联系</a></li>
 						</ul>
+
+						<ul class="nav navbar-nav navbar-right" id="nav_user_li">
+							<li >
+								<a class="btn" onclick="login_modal()"  >登录&emsp;<span class="glyphicon glyphicon-user"></span></a>
+							</li>
+						</ul>
+						
+						<!--用户信息隐藏域-->
+						<input class="hidden" th:value="${user}" />
+
 					</div>
 				</div>
 			</nav>
@@ -111,10 +121,12 @@
 				<!-- /轮播图 -->
 				<hr style="border-top:2px solid #9e9e9e;">
 				<h2 style="margin-bottom: 10px;">快速搜索</h2>
+				<form action="selectVehicleList" id="selectform" class="hidden" >
+				</form>
 				<form>
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="vehicle_base_brand">制造商</label>
-    					<select id="vehicle_base_brand" class="form-control">
+    					<select name="base.base_brand" id="vehicle_base_brand" class="form-control">
     						<option value="-1" selected="selected">不限</option>
     						<option value="奔驰" >奔驰</option>
     						<option value="宝马" >宝马</option>
@@ -123,9 +135,9 @@
     						<option value="别克" >别克</option>
 						</select>
 					</div>
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="vehicle_price">价格</label>
-    					<select id="vehicle_price" class="form-control">
+    					<select name="vehicle_price" id="vehicle_price" class="form-control">
 							<!--传值到后台
 								-1:查询的价格不限
 								200:查询0-200的
@@ -141,9 +153,9 @@
 						</select>
 					</div>
 
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="vehicle_base_type">车型</label>
-    					<select id="vehicle_base_type" class="form-control">
+    					<select name="base.base_type" id="vehicle_base_type" class="form-control">
     						<option value="-1" selected="selected">不限</option>
     						<option value="suv" >suv</option>
     						<option value="mpv" >mpv</option>
@@ -153,9 +165,9 @@
 						</select>
 					</div>
 					
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="vehicle_base_displacement">排量</label>
-    					<select id="vehicle_base_displacement" class="form-control">
+    					<select name="base.base_displacement" id="vehicle_base_displacement" class="form-control">
 							<!--
 								-1:查询的排量不限
 								1:查询0-2的
@@ -171,9 +183,9 @@
 						</select>
 					</div>
 
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="vehicle-mileage">里程</label>
-    					<select id="vehicle_mileage" class="form-control">
+    					<select name="vehicle_mileage" id="vehicle_mileage" class="form-control">
 							<!--
 								-1:查询的里程不限
 								1:查询1万公里以内
@@ -190,9 +202,9 @@
 						</select>
 					</div>
 					
-					<div class="form-gourp col-md-6">
+					<div class="form-gourp col-md-4">
 						<label for="quick_search_btn" ></label>
-						<input id="quick_search_btn" class="btn btn-success form-control" type="button" value="搜索" />
+						<input id="quick_search_btn" class="btn btn-success form-control" onclick="submitSelect()" type="button" value="搜索" />
 					</div>
 
 
@@ -281,33 +293,57 @@
 					<h3 class="panel-heading">店长推荐</h3>
 					<!--一个实例-->
 					<div class="media">
+						<a href="details/20200225151959">
 						<div class="media-left">
-						  <a href="#">
-							<img width="80" class="media-object" src="static/photo/20200115190546.png" alt="...">
-						  </a>
+							<img width="80" class="media-object" src="static/photo/20200115185851.png" alt="...">
 						</div>
 						<div class="media-body">
-						  <h4 class="media-heading">(vehicle_base_brand)宝马 2019</h4>
-						  <p>
-							  (vehicle_describe)超级实惠,快来使用
+						  <h4 class="media-heading">雪佛兰 科迈罗</h4>
+						  <p style="text-align: right;">
+							  	4万公里| 跑车
 						  </p>
 						</div>
+						</a>
 					</div>
 
 					<div class="media">
+						<a href="details/20200225154033">
 						<div class="media-left">
-						  <a href="#">
-							<img width="80" class="media-object" src="static/photo/20200115190546.png" alt="...">
-						  </a>
+							<img width="80" class="media-object" src="static/photo/20200115120330.png" alt="...">
 						</div>
 						<div class="media-body">
-						  <h4 class="media-heading">(vehicle_base_brand)宝马 2019</h4>
-						  <p>
-							  (vehicle_describe)超级实惠,快来使用
+						  <h4 class="media-heading">宝马 5系 2014款</h4>
+						  <p style="text-align: right;">
+							  	3.5万公里| suv
 						  </p>
 						</div>
+						</a>
 					</div>
 
+
+					<div class="media">
+						<a href="details/20200225151803">
+						<div class="media-left">
+							<img width="80" class="media-object" src="static/photo/20200115190203.png" alt="...">
+						</div>
+						<div class="media-body">
+						  <h4 class="media-heading">丰田 坦途 2014款</h4>
+						  <p style="text-align: right;">
+							  	2.3万公里| 皮卡车
+						  </p>
+						</div>
+						</a>
+					</div>
+
+
+					<h3 class="panel-heading">租车攻略</h3>
+					<ul class="newslist">
+						<li><a>4条国内经典线路 让你玩转自驾游</a></li>
+						<li><a>四大冬季自驾游好去处</a></li>
+						<li><a>人少景美 最适合自驾游的世外桃源</a></li>
+						<li><a>气温攀升 细数十大避暑胜地</a></li>
+						<li><a>春季自驾游去哪？15条自驾特色线路任你选</a></li>
+					</ul>
 
 				</div>
 
@@ -383,8 +419,99 @@
 		</footer>
 		
 	</div>
+
+	<!--用户登录框-->
+	<div id="userlogin_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<form action="loginUser" id="userlogin_modal_form">
+		  		<div class="modal-content">
+				
+					<div class="modal-header">
+				  		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  		<h4 class="modal-title" >用户登录</h4>
+			   		</div>
+			   		<div class="modal-body">
+						<div class="form-group">
+							<label for="user_name">账号</label>
+							<input type="text" name="user_id" placeholder="账号或电话" class="form-control" id="user_name"/>
+						</div>
+						<div class="form-group">
+							<label for="user_pwd">密码</label>
+							<input type="password" name="user_pwd" placeholder="密码" style="    text-indent: 5px;
+							letter-spacing: 5px;" class="form-control" id="user_pwd"/>
+							<a href="register.html" class="pull-right">新用户注册>></a>
+						</div>
+						
+					</div>
+					<div class="modal-footer">
+						<div class="form-group">
+							<input class="btn btn-success col-xs-12" onclick="action_login_form()" type="button" value="登录">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	  </div>
+
+
+	<!--支付界面-->
+	  <div id="pay_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<form action="loginUser" id="pay_modal_form">
+		  		<div class="modal-content">
+				
+					<div class="modal-header">
+				  		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  		<h4 class="modal-title" >确认订单信息</h4>
+			   		</div>
+			   		<div class="modal-body">
+						<img id="base_photo" >
+						<table class="table">
+							
+							<tr>
+								<th>品牌</th>
+								<th>车型</th>
+								<th>排量</th>
+								<th>速度</th>
+								<th>里程</th>
+								<th>新旧</th>
+								<th>金额</th>
+							</tr>
+							<tr>
+								<td id="order_brand"></td>
+								<td id="order_type"></td>
+								<td id="order_disp"></td>
+								<td id="order_speed"></td>
+								<td id="order_mileage"></td>
+								<td id="order_condition"></td>
+								<td id="order_price"></td>
+							</tr>
+						</table>
+						
+						<div class="form-inline">
+							<label >选择取车日期:</label>
+							<input type="date" class="form-control" placeholder="选择取车日趋"/>&emsp;
+							<label >选择租用天数:</label>
+							<input type="number" class="form-control" placeholder="选择天数"/>&emsp;天
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<div class="form-group">
+							<input class="btn btn-default "  type="button" value="取消"" data-dismiss="modal" >
+							<input class="btn btn-success "  type="button" value="付款"" >
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	  </div>
+
+
+
 </div>
 <script type="text/javascript" src="static/lib/jquery.min.js"></script>
+<script type="text/javascript" src="static/lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="static/js/plugin/slideshow.js"></script>
 <script type="text/javascript" src="static/js/index.js"></script>
 

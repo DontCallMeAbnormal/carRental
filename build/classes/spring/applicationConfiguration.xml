@@ -24,8 +24,8 @@
 			diskImgePath: 保存图片在磁盘中的路径
 		 -->
 		<bean class="cn.tongRenCollege.util.SelvetContext">
-			<property name="imgePath" value="static\photo\" />
-			<property name="diskImgePath" value="D:\graduation project\photobackup\"></property>
+			<property name="imgePath" value="static/photo/" />
+			<property name="diskImgePath" value="D:/graduation project/photobackup/"></property>
 		</bean>
 		
 		<!-- 将磁盘的图片复制到服务器中 -->

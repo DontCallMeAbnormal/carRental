@@ -79,8 +79,15 @@
 
 				<hr style="border-top:2px solid #9e9e9e;">
 				<h2 style="margin-bottom: 10px;">快速搜索</h2>
+				
+				
+				<!-- 提交查询的隐藏域 -->
+				<form action="selectVehicleList" id="selectform" class="hidden" >
+				
+				</form>
+				
 				<form>
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="vehicle_base_brand">制造商</label>
     					<select id="vehicle_base_brand" class="form-control">
     						<option value="-1" selected="selected">不限</option>
@@ -91,7 +98,7 @@
     						<option value="别克" >别克</option>
 						</select>
 					</div>
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="vehicle_price">价格</label>
     					<select id="vehicle_price" class="form-control">
 							<!--传值到后台
@@ -109,7 +116,7 @@
 						</select>
 					</div>
 
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="vehicle_base_type">车型</label>
     					<select id="vehicle_base_type" class="form-control">
     						<option value="-1" selected="selected">不限</option>
@@ -121,7 +128,7 @@
 						</select>
 					</div>
 					
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="vehicle_base_displacement">排量</label>
     					<select id="vehicle_base_displacement" class="form-control">
 							<!--
@@ -139,7 +146,7 @@
 						</select>
 					</div>
 
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="vehicle-mileage">里程</label>
     					<select id="vehicle_mileage" class="form-control">
 							<!--
@@ -158,9 +165,9 @@
 						</select>
 					</div>
 					
-					<div class="form-gourp col-md-6">
+					<div class="form-gourp col-md-4">
 						<label for="quick_search_btn" ></label>
-						<input id="quick_search_btn" class="btn btn-success form-control" type="button" value="搜索" />
+						<input id="quick_search_btn" class="btn btn-success form-control" onclick="submitSelect()" type="button" value="搜索" />
 					</div>
 
 
@@ -174,9 +181,22 @@
 			<div class="container-fluid">
 				<!--left panel-->
 				<div class="col-md-9 panel-left">
-					<h3 class="panel-heading">全部车品
+					<h3 class="panel-heading">
+						<a style="text-decoration: none" href="selectVehicleList">全部车品</a>
+						<small>
+							<span class="label label-info"  th:text="${brand}" ></span>
+							<span class="label label-info"  th:text="${displacement}" ></span>
+							<span class="label label-info"  th:text="${type}" ></span>
+							<span class="label label-info"  th:text="${mileage}" ></span>
+							<span class="label label-info"  th:text="${price}" ></span>
+						</small>
 					
-					<span style="float: right;font-size: 15px;display: block;height: 26px;line-height: 26px;">租金由低到高</span>
+					<span style="float: right;font-size: 15px;display: block;height: 26px;line-height: 26px;">
+					
+						<a style="text-decoration: none;
+    cursor: pointer;" onclick="descVehicle();" id="switchOrientation" >租金由低到高</a>
+					
+					</span>
 					<!-- 
 						写到这里
 						下一步:写快速查询
@@ -188,27 +208,10 @@
 					
 					<hr style="border-bottom: 1px solid #e4e4e4;">
 
-						<div class="row" >
-
-							<div class="col-sm-6" th:each="vehicle:${vfs}">
-								<div class="thumbnail">
-									<img th:src="@{/}+${vehicle.base.base_photo}" alt="null">
-									<div class="caption">
-										<h4 th:text="${vehicle.base.base_brand}+' '+${vehicle.base.base_model}" >宝马 2019
-										</h4>
-										<h4><small th:text="${vehicle.base.base_produced}+' | '+${vehicle.vehicle_mileage}+'万公里 | ' +   ${vehicle.base.base_type}   " >2016-8-31|1.2万公里|跑车</small></h4>
-										
-										
-										<div class="brand_footer">
-											<h4 class="price_lefttext"><span class="price_color" th:text="${vehicle.vehicle_price}">100</span>元/天</h4>
-											<button class="btn btn-success">下单</button>
-											<button class="btn btn-info">详情</button>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-
+						<div class="row" id="vehicle_list_showbox">
+							
+							
+							
 							
 
 						</div>
@@ -220,57 +223,71 @@
 					<h3 class="panel-heading">店长推荐</h3>
 					<!--一个实例-->
 					<div class="media">
+						<a href="details/20200225151959">
 						<div class="media-left">
-						  <a href="#">
-							<img width="80" class="media-object" src="static/photo/20200115190546.png" alt="...">
-						  </a>
+							<img width="80" class="media-object" src="static/photo/20200115185851.png" alt="...">
 						</div>
 						<div class="media-body">
-						  <h4 class="media-heading">(vehicle_base_brand)宝马 2019</h4>
-						  <p>
-							  (vehicle_describe)超级实惠,快来使用
+						  <h4 class="media-heading">雪佛兰 科迈罗</h4>
+						  <p style="text-align: right;">
+							  	4万公里| 跑车
 						  </p>
 						</div>
+						</a>
 					</div>
 
 					<div class="media">
+						<a href="details/20200225154033">
 						<div class="media-left">
-						  <a href="#">
-							<img width="80" class="media-object" src="static/photo/20200115190546.png" alt="...">
-						  </a>
+							<img width="80" class="media-object" src="static/photo/20200115120330.png" alt="...">
 						</div>
 						<div class="media-body">
-						  <h4 class="media-heading">(vehicle_base_brand)宝马 2019</h4>
-						  <p>
-							  (vehicle_describe)超级实惠,快来使用
+						  <h4 class="media-heading">宝马 5系 2014款</h4>
+						  <p style="text-align: right;">
+							  	3.5万公里| suv
 						  </p>
 						</div>
+						</a>
 					</div>
 
+
+					<div class="media">
+						<a href="details/20200225151803">
+						<div class="media-left">
+							<img width="80" class="media-object" src="static/photo/20200115190203.png" alt="...">
+						</div>
+						<div class="media-body">
+						  <h4 class="media-heading">丰田 坦途 2014款</h4>
+						  <p style="text-align: right;">
+							  	2.3万公里| 皮卡车
+						  </p>
+						</div>
+						</a>
+					</div>
 					<h3 class="panel-heading">优品良车</h3>
 					<div class="media">
 						<div class="media-left">
-						  <a href="#">
-							<img width="80" class="media-object" src="static/photo/20200115190546.png" alt="...">
+						  <a href="details/20200224052350">
+							<img width="80" class="media-object" src="static/photo/20200115162030.png" alt="...">
 						  </a>
 						</div>
 						<div class="media-body">
-						  <h4 class="media-heading">(vehicle_base_brand)宝马 2019</h4>
+						  <h4 class="media-heading">奔驰 2018款</h4>
 						  <p>
-							  (vehicle_describe)超级实惠,快来使用
+							 1.2万公里| 跑车
 						  </p>
 						</div>
 					</div>
 					<div class="media">
 						<div class="media-left">
-						  <a href="#">
+						  <a href="details/20200225153936">
 							<img width="80" class="media-object" src="static/photo/20200115190546.png" alt="...">
 						  </a>
 						</div>
 						<div class="media-body">
-						  <h4 class="media-heading">(vehicle_base_brand)宝马 2019</h4>
+						  <h4 class="media-heading">郑州日产</h4>
 						  <p>
-							  (vehicle_describe)超级实惠,快来使用
+							  1.2万公里| 皮卡车
 						  </p>
 						</div>
 					</div>
@@ -343,19 +360,136 @@
 			<div class="col-xs-12 footer_line">
 				<hr>
 				声明：本网站的车辆信息、检测报告、视频、图片等内容均来源与网络，
-				不保证信息的真实性
+				不保证信息的真实性.
 			</div>
 
 		</footer>
 		
 	</div>
-	<input th:value="${vfs}" id="test" >
+	
+	<!-- 用于接收后台的数据的隐藏域 -->
+	<p class="hidden" id="datalist" th:attr="lenght=${vehicleStat.size}" th:each="vehicle:${vfs}" >
+		<input  th:value="${vehicle.vehicle_id}" th:id="vehicle_id+${vehicleStat.index}" >
+		<input  th:value="${vehicle.vehicle_base_id}" th:id="vehicle_base_id+${vehicleStat.index}" >
+		<input  th:value="${vehicle.vehicle_employee_id}" th:id="vehicle_employee_id+${vehicleStat.index}" >
+		<input  th:value="${vehicle.vehicle_price}" th:id="vehicle_price+${vehicleStat.index}" >
+		<input  th:value="${vehicle.vehicle_describe}" th:id="vehicle_describe+${vehicleStat.index}" >
+		<input  th:value="${vehicle.vehicle_mileage}" th:id="vehicle_mileage+${vehicleStat.index}" >
+		<input  th:value="${vehicle.vehicle_condition}" th:id="vehicle_condition+${vehicleStat.index}" >
+		<input  th:value="${vehicle.vehicle_state}" th:id="vehicle_state+${vehicleStat.index}" >
+		<input  th:value="${vehicle.base}" th:id="base_+${vehicleStat.index}" >
+	</p>
 </div>
 <script type="text/javascript" th:src="@{/static/lib/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/plugin/slideshow.js}"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:src="@{/static/js/index.js}"></script>
 
-console.log($("#test").val())
+<script type="text/javascript">
+//拿去后台数据
+function paserJson(){
+	let lenght = $("#datalist").attr("lenght");
+	let vehiclelist = new Array();
+	for(let i=0;i<lenght;i++){
+		//解析base对象
+		let base = paser("base_",i);
+		base.base_photo=ctxPath+base.base_photo;//获取绝对路径
+		//获取vehicle的属性,并将base对象和各个属性值装入对象
+		let vehicle={
+			base:base,
+			vehicle_id:$("#vehicle_id"+''+i).val(),
+			vehicle_base_id:$("#vehicle_base_id"+''+i).val(),
+			vehicle_employee_id:$("#vehicle_employee_id"+''+i).val(),
+			vehicle_price:$("#vehicle_price"+''+i).val(),
+			vehicle_describe:$("#vehicle_describe"+''+i).val(),
+			vehicle_mileage:$("#vehicle_mileage"+''+i).val(),
+			
+			vehicle_condition : $("#vehicle_condition"+''+i).val(),
+			vehicle_state : $("#vehicle_state"+''+i).val()
+		};
+		//将解析好的对象装入数组
+		vehiclelist[i] = vehicle;
+	}
+	
+	//解析函数
+	function paser(id,i){
+		let obj = $("#"+id+''+i).val();
+		return eval('(' + obj + ')');//解析的路径应当用'/'符号作为分隔
+	}
+	
+	//返回解析完的数组
+	return vehiclelist;
+}
+
+var vehiclelist=paserJson();
+
+descVehicle();//默认升序
+function descVehicle(){
+	var vehicle;
+	var htmlstr='';
+	for(var i=0;i<vehiclelist.length;i++){
+		vehicle = vehiclelist[i];
+		
+		htmlstr = htmlstr
+		+'<div class="col-sm-6">'
+		+'<div class="thumbnail">'
+		+'<img src="'+vehicle.base.base_photo+'" alt="null">'
+		+'<div class="caption">'
+		+'	<h4 >'+vehicle.base.base_brand+' '+vehicle.base.base_model+'</h4>'
+		+'	<h4><small>'+vehicle.base.base_produced+'|'+vehicle.vehicle_mileage+'万公里| '+vehicle.base.base_type+'</small></h4>'
+		+'	<div class="brand_footer">'
+		+'		<h4 class="price_lefttext"><span class="price_color" >'+vehicle.vehicle_price+'</span>元/天</h4>'
+		+'		<button class="btn btn-success">下单</button>'
+		+'		<button onclick="details('+vehicle.vehicle_id+')" class="btn btn-info">详情</button>'
+		+'	</div>'
+		+'</div>'
+		+'</div> '
+		+'</div>';
+		
+		
+	}
+	$("#vehicle_list_showbox").html(htmlstr);
+	var switchOrientation = $("#switchOrientation");
+	switchOrientation.attr({"onclick":"ascVehicle()","class":"glyphicon glyphicon-arrow-up"});
+	switchOrientation.text("租金由低到高");
+	
+}
+
+
+function ascVehicle(){
+	var vehicle;
+	var htmlstr='';
+	for(var i=vehiclelist.length-1;i>=0;i--){
+		vehicle = vehiclelist[i];
+
+		htmlstr = htmlstr
+		+'<div class="col-sm-6">'
+		+'<div class="thumbnail">'
+		+'<img src="'+vehicle.base.base_photo+'" alt="null">'
+		+'<div class="caption">'
+		+'	<h4 >'+vehicle.base.base_brand+' '+vehicle.base.base_model+'</h4>'
+		+'	<h4><small>'+vehicle.base.base_produced+'|'+vehicle.vehicle_mileage+'万公里| '+vehicle.base.base_type+'</small></h4>'
+		+'	<div class="brand_footer">'
+		+'		<h4 class="price_lefttext"><span class="price_color" >'+vehicle.vehicle_price+'</span>元/天</h4>'
+		+'		<button class="btn btn-success">下单</button>'
+		+'		<button class="btn btn-info">详情</button>'
+		+'	</div>'
+		+'</div>'
+		+'</div> '
+		+'</div>';
+	
+	}
+	$("#vehicle_list_showbox").html(htmlstr);
+	var switchOrientation = $("#switchOrientation");
+	switchOrientation.attr({"onclick":"descVehicle()","class":"glyphicon glyphicon-arrow-down"});
+	switchOrientation.text("租金由高到低 ");
+	
+}
+
+
+
+//strvfs=strvfs.substring(1,strvfs.indexOf(']')); 
+
+//var vfs = eval('(' + strvfs + ')');
 
 </script>
 

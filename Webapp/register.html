@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>汽车租赁系统</title>
+
+    <!-- Bootstrap -->
+    <link href="static/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="static/css/index.css" rel="stylesheet" >
+	<link href="static/css/plugin/slideshow.css" rel="stylesheet" >
+	
+	<link href="static/css/font-awesome.css" rel="stylesheet">
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .head{
+            margin: 20px 0px;
+            padding: 20px 0px;
+            text-align: center;
+            background-color: #00BCD4;
+            color: #fff;
+            box-shadow: 0px 0px 10px #001a65;
+        }
+        body,html{
+            background-color: #536db7;
+            color: #eee;    
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="view" >
+        
+
+        <div class="head">
+            <a href="index.html"><img src="static/photo/Carbrand.png"></a>
+            <h3>注册</h3>
+        </div>
+        <div class="container-fluid ">
+            <div class="col-sm-5 col-md-3 center-block" style="float: none;">
+                <form id="form_register" action="registerUser" method="POST">
+                    <div class="form-group">
+                        <label for="user_name">用户名</label>
+                        <input id="user_name" name="user_name" class="form-control" placeholder="输入用户名" type="text"  />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_phone">电话号码</label>
+                        <input id="user_phone" name="user_phone" class="form-control" placeholder="输入电话号码" type="number"  />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_pwd">密码</label>
+                        <input id="user_pwd" name="user_pwd" class="form-control" placeholder="输入密码" type="password"  />
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="user_repwd">确认密码</label>
+                        <input id="user_repwd" class="form-control" placeholder="再次输入密码" type="password"  />
+                    </div>
+
+                    <div class="form-group">
+                        <input onclick="register()" class="btn btn-success col-xs-12" value="注册" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script type="text/javascript" src="static/lib/jquery.min.js"></script>
+<script type="text/javascript" src="static/lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script>
+   
+   center();
+
+   $(window).resize(function () { 
+       center();
+   });
+
+    function center(){
+        var win_height = $(window).height();
+        var view_height = $("#view").height();
+        var margin_top =  (win_height-view_height)/2;
+        $("#view").css("margin-top", margin_top+'px');
+    }   
+
+
+    function register(){
+        var form_data = $("#form_register").serialize();
+        if(form_data.user_pwd == '' || form_data.user_name == ''){
+            alert("请输入用户名和密码进行注册");
+            return;
+        }
+        if(form_data.user_pwd == $("#user_repwd").val()){
+            alert("两次密码输入不同");
+            $("#user_repwd").val('');
+            $("#user_pwd").val('');
+            return;   
+        }
+        $("#form_register").submit();
+
+
+
+    }
+
+
+
+</script>
+</html>

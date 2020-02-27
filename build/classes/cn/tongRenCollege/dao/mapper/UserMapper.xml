@@ -9,6 +9,9 @@
  		VALUES (#{order_id}, #{order_vehicle_id}, #{order_user_id}, #{order_price}, '预订单', #{order_startDate}, #{order_quantity});
  	</insert>
  	
+ 	<insert id="registerUser" parameterType="User">
+ 		INSERT INTO `user` (`user_id`, `user_name`, `user_phone`, `user_pwd`) VALUES (#{user_id}, #{user_name}, #{user_phone}, #{user_pwd});
+ 	</insert>
  	
  	
  <!-- /增加 -->
@@ -81,6 +84,113 @@
 	
 	<select id="queryVehicleFullByNewNum" resultMap="cn.tongRenCollege.dao.mapper.AdmMapper.VehicleFull">
 			SELECT * FROM `vehicle` v INNER JOIN `base` b ON v.vehicle_base_id=b.base_id ORDER BY v.vehicle_id DESC limit 0,${value};
+	</select>
+	
+	<select id="queryVehicleFull" parameterType="VehicleFull" resultMap="VehicleFull" >
+		SELECT * FROM `vehicle` v INNER JOIN `base` b ON v.vehicle_base_id=b.base_id
+			<where>
+				<if test="base != null">
+					<if test="base.base_id != null and base.base_id != '' ">
+						and b.base_id=#{base.base_id}
+					</if>
+					<if test="base.base_type != null and base.base_type != '' ">
+						and b.base_type=#{base.base_type}
+					</if>
+					<if test="base.base_brand != null and base.base_brand != '' ">
+						and b.base_brand=#{base.base_brand}
+					</if>
+					<if test="base.base_model != null and base.base_model != '' ">
+						and b.base_model=#{base.base_model}
+					</if>
+					<if test="base.base_produced != null ">
+						and b.base_produced=#{base.base_produced}
+					</if>
+					<if test="base.base_displacement != null and base.base_displacement != 0 ">
+						
+						<!-- 小于等于2 -->
+						<if test="base.base_displacement lte 1" >
+							and b.base_displacement &lt;= 2
+						</if>
+						<!-- 大于2 小于等于3 -->
+						<if test="base.base_displacement > 1 and base.base_displacement lte 3" >
+							and b.base_displacement &lt;= #{base.base_displacement} and b.base_displacement > 2
+						</if>
+						<!-- 大于3 小于等于5 -->
+						<if test="base.base_displacement > 3 and base.base_displacement lte 5" >
+							and b.base_displacement &lt;= #{base.base_displacement} and b.base_displacement > 3
+						</if>
+						<!-- 大于5  -->
+						<if test="base.base_displacement > 5" >
+							and b.base_displacement > 5
+						</if>
+						
+						
+						
+						
+					</if>
+					<if test="base.base_speed != null and base.base_speed != 0 ">
+						and b.base_speed=#{base.base_speed}
+					</if>
+				</if>
+				
+				<if test="vehicle_id != null and vehicle_id != '' ">
+					and v.vehicle_id=#{vehicle_id}
+				</if>
+				<if test="vehicle_base_id != null and vehicle_base_id != '' ">
+					and v.vehicle_base_id=#{vehicle_base_id}
+				</if>
+				<if test="vehicle_employee_id != null and vehicle_employee_id != '' ">
+					and v.vehicle_employee_id=#{vehicle_employee_id}
+				</if>
+				<if test="vehicle_price != null and vehicle_price > 0">
+					<!-- 小于等于200 -->
+					<if test="vehicle_price lte 200 ">
+						and v.vehicle_price  &lt;= #{vehicle_price}
+					</if>
+					<!-- 大于200 小于等于 500 -->
+					<if test="vehicle_price > 200 and  vehicle_price lte 500">
+						and v.vehicle_price  &lt;= #{vehicle_price} and v.vehicle_price > 200
+					</if>
+					<!-- 大于500 小于等于1000 -->
+					<if test="vehicle_price > 500 and  vehicle_price lte 1000">
+						and v.vehicle_price  &lt;= #{vehicle_price} and v.vehicle_price > 500
+					</if>
+					<!-- 大于1000 -->
+					<if test="vehicle_price > 1000">
+						and v.vehicle_price  > 1000
+					</if>
+					
+				</if>
+				<if test="vehicle_mileage != null and vehicle_mileage > 0">
+					
+					<!-- 小于等于1 -->
+					<if test="vehicle_mileage lte 1" >
+						and v.vehicle_mileage &lt;=#{vehicle_mileage}
+					</if>
+					<!-- 小于等于3 -->
+					<if test="vehicle_mileage > 1 and vehicle_mileage lte 3" >
+						and v.vehicle_mileage &lt;=#{vehicle_mileage} 
+					</if>
+					<!-- 小于等于5 -->
+					<if test="vehicle_mileage > 3 and vehicle_mileage lte 5" >
+						and v.vehicle_mileage &lt;=#{vehicle_mileage}
+					</if>
+					<!-- 大于5  -->
+					<if test="vehicle_mileage > 5" >
+						and v.vehicle_mileage > 5
+					</if>
+					
+					
+					
+				</if>
+				<if test="vehicle_condition != null and vehicle_condition > 0 and vehicle_condition lt 10 ">
+					and v.vehicle_condition=#{vehicle_condition}
+				</if>
+				<if test="vehicle_state != null ">
+					and v.vehicle_state=#{vehicle_state}
+				</if>
+			</where>
+			ORDER BY vehicle_price ASC;
 	</select>
 	
 	<select id="getVehicleFullById" parameterType="String" resultMap="VehicleFull">

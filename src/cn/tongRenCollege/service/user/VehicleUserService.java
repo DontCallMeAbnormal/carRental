@@ -40,8 +40,6 @@ public class VehicleUserService {
 	 * @return
 	 */
 	public List<VehicleFull> queryVehicleFullByNew(int x){
-		
-		
 		return ppt.vehicleFulltranslation(userMapper.queryVehicleFullByNewNum(x));
 	}
 	
@@ -56,5 +54,20 @@ public class VehicleUserService {
 		vlf.setBase(ppt.baseTranslation(vlf.getBase()));
 		return vlf;
 	}
+	
+	
+	/**
+	 * 条件查询车辆信息
+	 * @return
+	 */
+	public List<VehicleFull> selectVehicle(VehicleFull vehicleFull){
+		List<VehicleFull> queryVehicleFull = userMapper.queryVehicleFull(vehicleFull);
+		
+		return ppt.vehicleFulltranslation(queryVehicleFull);
+	}
+	
+	
+	
+	
 	
 }

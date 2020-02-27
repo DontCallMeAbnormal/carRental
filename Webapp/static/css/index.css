@@ -63,6 +63,19 @@ body,html{
 	color: #8c8c8c;
 }
 
+.media a{
+	text-decoration: none;
+}
+
+.newslist a{
+	padding: 0px 10px 20px 10px;
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
 /*--------------------------------*/
 /*       middlepanel / 璇︾粏淇℃伅    */
 /*-------------------------------*/

@@ -60,6 +60,14 @@ public interface UserMapper {
 	 */
 	public User getUser(User user);
 	
+	
+	/**
+	 * 用户注册
+	 * @param user
+	 */
+	public void registerUser(User user);
+	
+	
 	/**
 	 * 查询所有库中车辆
 	 * @param colName 排序的字段
@@ -81,5 +89,12 @@ public interface UserMapper {
 	 * @return
 	 */
 	public VehicleFull getVehicleFullById(String id);
+
 	
+	/**
+	 * 条件查询车辆信息
+	 * @param vehicleFull
+	 * @return
+	 */
+	public List<VehicleFull> queryVehicleFull(VehicleFull vehicleFull);
 }
