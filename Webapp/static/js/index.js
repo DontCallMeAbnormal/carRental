@@ -1,16 +1,54 @@
 var indexVehicle;//首页的车程信息
 var userInfo; //用户的相关信息
 
+var pathName = window.document.location.pathname;
+var ctxPath  = pathName.substring(0, pathName.substr(1).indexOf('/')+1)+'/'; 
 $(document).ready(function(){
 	getindexVehicle();
 	testUser();//检查用户是否登录
+
+	console.log(ctxPath);
+	
+	//设置date类型的input 的值为今天
+	var test=$("input[name='order_startDate']");
+	var time = new Date().format("yyyy-MM-dd");
+	$("input[name='order_startDate']").val(time);
 })
 
+/**
+ * 对Date类型的扩展,将datez转换为字符串
+ * 调用方法:
+ * 	format("yyyy-MM-dd HH:mm:ss");
+ * 	format("yyyy-MM-dd");
+ */
+Date.prototype.format = function(fmt)   
+{ //author: meizz   
+  var o = {   
+    "M+" : this.getMonth()+1,                 //月份   
+    "d+" : this.getDate(),                    //日   
+    "h+" : this.getHours(),                   //小时   
+    "m+" : this.getMinutes(),                 //分   
+    "s+" : this.getSeconds(),                 //秒   
+    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
+    "S"  : this.getMilliseconds()             //毫秒   
+  };   
+  if(/(y+)/.test(fmt))   
+    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+  for(var k in o)   
+    if(new RegExp("("+ k +")").test(fmt))   
+  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+  return fmt;   
+}
+
+
+/**
+ * 检查用户是否登录
+ */
 function testUser(){
 
 	$.ajax({
 		type: "GET",
-		url: "getUser",
+		url: ctxPath+"getUser",
 		success: function (response) {
 			console.log(response);
 			if(response!=''){
@@ -19,6 +57,7 @@ function testUser(){
 				logined();
 			}else{
 				console.log("用户未登录");
+				login_modal();//调出模态框
 				login();
 			}
 
@@ -31,7 +70,7 @@ function testUser(){
 
 //获取汽车数据
 function getindexVehicle(){
-	$.get("userQueryVehicleNew/6",function(data,status){
+	$.get(ctxPath+"userQueryVehicleNew/6",function(data,status){
 		indexVehicle=data;
 	    console.log(indexVehicle);
 	    write();
@@ -101,7 +140,7 @@ function write() {
 //点击详情后
 function details(id){
 	//info_vehicle_id=indexVehicle[i].vehicle_id;//将该车的数据传往后台
-	window.location='details/'+id;
+	window.location=ctxPath+'details/'+id;
 }
 
 
@@ -117,7 +156,6 @@ function placeorder(i){
 		return;
 	}
 	var vehcile=indexVehicle[i];
-	console.log(vehcile);
 	/**
 	 * 写到这
 	 *	在前台计算好金额显示,传送日期和天数到后台,后台生成订单
@@ -134,9 +172,29 @@ function placeorder(i){
 	$("#order_mileage").text(vehcile.vehicle_mileage+'万公里');
 	$("#order_condition").text(vehcile.vehicle_condition+'成');
 	$("#order_price").text(vehcile.vehicle_price);
+	$("#order_price").data("vehicle_price", vehcile.vehicle_price);
+
+	$("#pay_btn").attr("onclick", "pay("+i+","+userInfo.user_id+")");
+	$("#dayNum").val(1);
 	
-	//如果支付成功,则提交到后台
-	if(pay()){
+}
+
+/**
+ * 支付接口,测试阶段默认返回字符成成功
+ */
+function pay(i,user_id){
+	var vehcile=indexVehicle[i];
+	console.log(vehcile);
+	
+	$("#vehicle_id").val(vehcile.vehicle_id);
+	$("#user_id").val(userInfo.user_id);
+
+	//这里调用自付接口,true则代表支付成功
+	if(true){
+		
+		$("#pay_modal_form").submit();
+
+	}else{
 
 
 	}
@@ -144,16 +202,24 @@ function placeorder(i){
 }
 
 /**
- * 支付接口,测试阶段默认返回字符成成功
+ * input 校验,只能输入数字,且数字大于0小于30
+ * 并更新根据输入内容更新金额
+ * @param {e} e 
  */
-function pay(){
-
-
-
-	return true;
+function testDayNum(e){
+	var theInput=$(e);
+	var val = theInput.val();
+	if(val.length>1 && val[0]=='0' || val=='0'|| val==''){
+		val='1';
+	}
+	if(Number(val) > 30){
+		val = '30';
+	}
+	val.replace(/[^\d]*/g,"");
+	theInput.val(val);
+	var price = $("#order_price").data("vehicle_price");
+	$("#order_price").text(Number(val)*Number(price));
 }
-
-
 
 
 
@@ -207,7 +273,7 @@ function action_login_form(){
 	var formdata = $("#userlogin_modal_form").serialize();
 	$.ajax({
 		type: "POST",
-		url: "loginUser",
+		url: ctxPath+"loginUser",
 		data: formdata,
 		success: function (response) {
 			if(response==''){
@@ -228,7 +294,12 @@ function action_login_form(){
 
 //已经登录
 function logined(){
-	$("#nav_user_li").html('<li><a class="btn"  >'+userInfo.user_name+'&emsp;<span class="glyphicon glyphicon-user"></span></a></li>');
+	console.log("用户登录了 : "+userInfo.user_name);
+	$("#nav_user_li").html('<li><a class="btn"  >'+userInfo.user_name+'&emsp;<span class="glyphicon glyphicon-user"></span></a></li>'+
+	'<li>'+
+	'<a href="userInfo" class="btn"  >订单&emsp;<span class="glyphicon glyphicon-shopping-cart"></span></a>'+
+	'</li>'
+	);
 
 }
 //未登录

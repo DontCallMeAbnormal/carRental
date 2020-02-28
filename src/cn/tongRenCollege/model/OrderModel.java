@@ -28,6 +28,22 @@ public interface OrderModel {
 	public void updata(Order order) throws Exception;
 	
 	
+	/**
+	 * 新增订单
+	 * @param order
+	 * @throws Exception 
+	 */
+	public void createrOrder(Order order) throws Exception;
+
+	/**
+	 * 新增订单
+	 * startDate必须是今天或今天之后
+	 * stopDate根据dayNum计算
+	 * @param order 
+	 * @param dayNum stopDate根据startDate来加上dayNum计算
+	 * @throws Exception
+	 */
+	void createrOrder(Order order, int dayNum) throws Exception;
 	
 	
 }

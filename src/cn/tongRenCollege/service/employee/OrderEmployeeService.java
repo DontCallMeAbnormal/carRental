@@ -97,6 +97,20 @@ public class OrderEmployeeService implements OrderModel{
 		}
 		
 	}
+
+
+	@Override
+	public void createrOrder(Order order) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void createrOrder(Order order, int dayNum) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

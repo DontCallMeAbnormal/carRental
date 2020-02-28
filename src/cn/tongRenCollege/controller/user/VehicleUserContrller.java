@@ -46,7 +46,7 @@ public class VehicleUserContrller {
 	@RequestMapping("/details/{id}")
 	public ModelAndView vehicleDetails(@PathVariable("id")String x){
 		ModelAndView md = new ModelAndView();
-		md.setViewName("/vehicle_info");
+		md.setViewName("/WEB-INF/page/vehicle_info");
 		VehicleFull vlf = userService.vehicleDetails(x);
 		md.addObject("vehicle", vlf);//返回该车的详细数据
 		md.addObject("employee", empMapper.selectEmployee(vlf.getVehicle_employee_id()));//返回负责员工的信息
@@ -61,7 +61,7 @@ public class VehicleUserContrller {
 	@RequestMapping("/queryVehicleList")
 	public ModelAndView vehicleList(){
 		ModelAndView md = new ModelAndView();
-		md.setViewName("/vehicle_list");
+		md.setViewName("/WEB-INF/page/vehicle_list");
 		List<VehicleFull> vehicleFullAll = userService.queryVehicleFullAll("vehicle_price", "ASC");
 		md.addObject("vfs", vehicleFullAll);//返回该车的详细数据
 		
@@ -76,7 +76,7 @@ public class VehicleUserContrller {
 	@RequestMapping("/selectVehicleList")
 	public ModelAndView selectVehicleList(VehicleFull vehicle){
 		ModelAndView md = new ModelAndView();
-		md.setViewName("/vehicle_list");
+		md.setViewName("/WEB-INF/page/vehicle_list");
 		List<VehicleFull> vehicleFullAll = userService.selectVehicle(vehicle);
 		md.addObject("vfs", vehicleFullAll);//返回该车的详细数据
 		
