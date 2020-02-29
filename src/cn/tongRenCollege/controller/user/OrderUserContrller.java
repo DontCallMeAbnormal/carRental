@@ -29,9 +29,8 @@ public class OrderUserContrller {
 		
 		ModelAndView md = new ModelAndView();
 		try {
-			List<Orderdetail> orders = userService.customerOrders(order, dayNum);
-			md.addObject("orders", orders);
-			md.setViewName("/userInfo");
+			userService.createrOrder(order, dayNum);
+			md.setViewName("redirect:/userInfo");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,7 +47,7 @@ public class OrderUserContrller {
 			User user = (User)session.getAttribute("user");
 			List<Orderdetail> orders = userService.queryOrderdetailList(user.getUser_id());
 			md.addObject("orders", orders);
-			md.setViewName("/WEB-INF/page/vehicle_user");
+			md.setViewName("/WEB-INF/page/vehicle_user.html");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

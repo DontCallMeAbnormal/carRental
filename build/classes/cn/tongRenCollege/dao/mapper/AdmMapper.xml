@@ -228,6 +228,9 @@
 				<if test="user != null and user.user_name != null and user.user_name != '' ">
 					and user_name=#{user.user_name}
 				</if>
+				<if test="order_user_id != null and order_user_id != null and order_user_id != '' ">
+					and order_user_id=#{order_user_id}
+				</if>
 				<if test="employee != null and employee.employee_name != null and employee.employee_name != '' ">
 					and employee_name=#{employee.employee_name}
 				</if>

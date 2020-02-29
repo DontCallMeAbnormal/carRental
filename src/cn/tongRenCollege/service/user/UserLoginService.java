@@ -23,6 +23,7 @@ public class UserLoginService {
 	 * @return
 	 */
 	public User testUser(User user) {
+		user.setUser_phone(user.getUser_id());
 		User u = userMapper.getUser(user);
 		if(u!=null) {
 			u.setUser_pwd(null);

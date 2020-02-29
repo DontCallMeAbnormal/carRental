@@ -52,7 +52,7 @@ public class OrderContrller {
 	 */
 	@RequestMapping(value="/getChartData",method=RequestMethod.GET)
 	@ResponseBody
-	public String getChartData() {
+	public int[] getChartData() {
 		
 		return orderManagerService.getChartData();
 	}

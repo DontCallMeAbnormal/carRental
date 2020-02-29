@@ -3,9 +3,10 @@ var userInfo; //用户的相关信息
 
 var pathName = window.document.location.pathname;
 var ctxPath  = pathName.substring(0, pathName.substr(1).indexOf('/')+1)+'/'; 
+
 $(document).ready(function(){
-	getindexVehicle();
 	testUser();//检查用户是否登录
+	getindexVehicle();//首页获取车辆信息
 
 	console.log(ctxPath);
 	
@@ -111,6 +112,8 @@ function write() {
 			let vehicle_price=indexVehicle[i].vehicle_price;
 			let vehicle_base_model=indexVehicle[i].base.base_model;
 			let vehicle_id=indexVehicle[i].vehicle_id;
+			let vehicle_state=indexVehicle[i].vehicle_state;
+			
 			str+=html01;
 			str+='<img src="'+vehcile_base_photo+'" alt="null">'+
 					'<div class="caption">'+
@@ -118,11 +121,13 @@ function write() {
 						'<p><small>'+vehcile_base_produced+'|'+vehcile_mileage+'万公里| '+vehcile_base_type+'</small></p></h4>'+
 					
 					'<div class="brand_footer">'+
-					'<h4 class="price_lefttext"><span class="price_color">'+vehicle_price+'</span>元/天</h4>'+
-					'<button onclick="placeorder('+i+')" class="btn btn-success">下单</button>'+
-					'<button onclick="details('+vehicle_id+')" class="btn btn-info">详情</button></div></div>';
-			
-			
+					'<h4 class="price_lefttext"><span class="price_color">'+vehicle_price+'</span>元/天</h4>';
+
+			if(vehicle_state=='空闲'){
+				str+='<button onclick="placeorder('+i+')" class="btn btn-success">下单</button>';
+			}
+			str+='<button onclick="details('+vehicle_id+')" class="btn btn-info">详情</button></div></div>';
+
 			str+=html02;
 						
 		}
@@ -181,13 +186,16 @@ function placeorder(i){
 
 /**
  * 支付接口,测试阶段默认返回字符成成功
+ * @param {*} i 当前订单的车辆在全组车辆里面的下标
+ * @param {*} user_id 用户的id
  */
 function pay(i,user_id){
+	
 	var vehcile=indexVehicle[i];
-	console.log(vehcile);
+
 	
 	$("#vehicle_id").val(vehcile.vehicle_id);
-	$("#user_id").val(userInfo.user_id);
+	$("#user_id").val(user_id);
 
 	//这里调用自付接口,true则代表支付成功
 	if(true){
@@ -297,7 +305,7 @@ function logined(){
 	console.log("用户登录了 : "+userInfo.user_name);
 	$("#nav_user_li").html('<li><a class="btn"  >'+userInfo.user_name+'&emsp;<span class="glyphicon glyphicon-user"></span></a></li>'+
 	'<li>'+
-	'<a href="userInfo" class="btn"  >订单&emsp;<span class="glyphicon glyphicon-shopping-cart"></span></a>'+
+	'<a href="'+ctxPath+'userInfo" class="btn"  >订单&emsp;<span class="glyphicon glyphicon-shopping-cart"></span></a>'+
 	'</li>'
 	);
 

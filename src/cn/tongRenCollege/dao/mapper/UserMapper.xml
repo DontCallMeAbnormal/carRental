@@ -5,8 +5,8 @@
  
  <!-- 增加 -->
  	<insert id="creatOrder" parameterType="Order" >
- 		INSERT INTO `order` (`order_id`, `order_vehicle_id`, `order_user_id`, `order_price`, `order_state`, `order_startDate`, `order_quantity`) 
- 		VALUES (#{order_id}, #{order_vehicle_id}, #{order_user_id}, #{order_price}, '预订单', #{order_startDate}, #{order_quantity});
+ 		INSERT INTO `order` (`order_id`, `order_vehicle_id`, `order_user_id`, `order_price`, `order_state`, `order_startDate`, `order_stopDate`, `order_quantity`) 
+ 		VALUES (#{order_id}, #{order_vehicle_id}, #{order_user_id}, #{order_price}, '预订单', #{order_startDate}, #{order_stopDate},#{order_quantity});
  	</insert>
  	
  	<insert id="registerUser" parameterType="User">

@@ -16,7 +16,7 @@ public class UserRegisterContrller {
 	@RequestMapping("/registerUser")
 	public String registerUser(User user){
 		userService.registerUser(user);
-		return "index.html";
+		return "/index.html";
 	}
 	
 	

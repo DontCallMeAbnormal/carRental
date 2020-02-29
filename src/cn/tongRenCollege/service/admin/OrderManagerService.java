@@ -34,17 +34,17 @@ public class OrderManagerService {
 	 * @return
 	 */
 	@Transactional(readOnly=true)
-	public String getChartData() {
+	public int[] getChartData() {
 		
 		int[] ss= new int[7];
 		Date date=new Date(System.currentTimeMillis());	
 		for (int i = 0; i < ss.length; i++) {
-			ss[i]=getOrdercount(date.toString());
+			ss[ss.length-i-1]=getOrdercount(date.toString());
 			date.setDate(date.getDate()-1);
 		}
 		
 		
-		return "["+ss[0]+","+ss[1]+","+ss[2]+","+ss[3]+","+ss[4]+","+ss[5]+","+ss[6]+"]";
+		return ss;
 	}
 	
 	

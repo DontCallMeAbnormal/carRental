@@ -99,6 +99,9 @@ public class OrderUserService implements OrderModel{
 		Date stopDate = new Date(startDate.getTime());
 		stopDate.setDate(stopDate.getDate()+dayNum);
 		
+		System.out.println("=======================");
+		System.out.println("======== "+order+"    =====");
+		System.out.println("=======================");
 		VehicleFull vehicleFull = userMapper.getVehicleFullById(order.getOrder_vehicle_id());
 		
 		order.setOrder_price(vehicleFull.getVehicle_price()*dayNum);//计算价格
@@ -112,13 +115,18 @@ public class OrderUserService implements OrderModel{
 	@Override
 	public void createrOrder(Order order) throws Exception {
 		// TODO Auto-generated method stub
+		
 		order.setOrder_state("预订单");//设置状态
 		order.setOrder_id(new java.util.Date());//设置订单的id
-		
 		if(!changeState("已出租", order.getOrder_vehicle_id())) {
-			throw new RuntimeException("汽车暂时不能预订");
+			System.out.println("=======================");
+			System.out.println("======== 车已经被租出    =====");
+			System.out.println("=======================");
+			return;
 		}
-		
+		System.out.println("=======================");
+		System.out.println("=======   创建订单     =======");
+		System.out.println("=======================");
 		
 		userMapper.creatOrder(order);
 		
@@ -133,65 +141,25 @@ public class OrderUserService implements OrderModel{
 	 * @param vehicle_id
 	 */
 	private Boolean changeState(String state,String vehicle_id) {
-		VehiceState vstate = testVehiceState(vehicle_id);
-		
+		VehicleFull vehicleFull = admMapper.getVehicleFullById(vehicle_id);
+		String vehicle_state = vehicleFull.getVehicle_state();
+		System.out.println("=======================");
+		System.out.println("数据库的车辆的状态  :"+vehicle_state);
+		System.out.println("数据库的车辆的id  :"+vehicleFull.getVehicle_id());
+		System.out.println("=======================");
+		if(vehicle_state.equals(state)) {
+			return false;
+		}
 		Vehicle vehicle = new Vehicle();
 		vehicle.setVehicle_id(vehicle_id);
 		vehicle.setVehicle_state(state);
-		
-		switch (vstate) {
-			case free:
-				if(!state.equals("空闲")) {
-					admMapper.updataVehicle(vehicle);
-				}
-				return true;
-			case busy:
-				if(!state.equals("已出租")) {
-					admMapper.updataVehicle(vehicle);
-				}
-				return true;
-			case other:
-				if(!state.equals("其他")) {
-					admMapper.updataVehicle(vehicle);
-				}
-				return true;
-			default:
-				break;
-		}
-		return false;
+		admMapper.updataVehicle(vehicle);
+		return true;
 			
 	}
 	
 	
-	
-	/**
-	 * 返回VehiceState 枚举类
-	 * @param vehicleId
-	 */
-	private VehiceState testVehiceState(String vehicleId) {
-		VehicleFull vehicleFull = admMapper.getVehicleFullById(vehicleId);
-		if(vehicleFull.getVehicle_state().equals("空闲")) {
-			return VehiceState.free;
-		}else if(vehicleFull.getVehicle_state().equals("已出租")){
-			return VehiceState.busy;
-		}
-		return VehiceState.other;
-		
-	}
-	
-	/**
-	 * 枚举
-	 * free :空闲
-	 * busy : 忙
-	 * other: 其他
-	 * @author Administrator
-	 *
-	 */
-	private  enum VehiceState{
-		
-		free,busy,other;
-		
-	}
+
 	
 	
 }

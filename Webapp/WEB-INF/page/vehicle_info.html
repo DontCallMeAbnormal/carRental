@@ -161,11 +161,20 @@
 
 					<hr>
 					
-					<div class="col-xs-12">
-						<button class="btn btn-success center-block" style="    letter-spacing: 10px;
+					<div class="col-xs-12" th:switch="${vehicle.vehicle_state}">
+						<button th:case="'空闲'" class="btn btn-success center-block" onclick="placeorder_info()" style="    letter-spacing: 10px;
 						font-size: 20px;
 						text-indent: 10px;
 						padding: 10px 20px;">立即预订</button>
+						<button th:case="'已出租'" disabled="disabled" class="btn btn-warning center-block" style="    letter-spacing: 10px;
+						font-size: 20px;
+						text-indent: 10px;
+						padding: 10px 20px;">车辆已出租</button>
+						<button th:case="'其他'"  disabled="disabled" class="btn btn-default center-block" style="    letter-spacing: 10px;
+						font-size: 20px;
+						text-indent: 10px;
+						padding: 10px 20px;">车辆维修</button>
+
 					</div>
 					
 
@@ -373,43 +382,43 @@
 		</footer>
 		
 <!--用户登录框-->
-<div id="userlogin_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-	<div class="modal-dialog modal-sm" role="document">
-		<form action="loginUser" id="userlogin_modal_form">
-			  <div class="modal-content">
-			
-				<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					  <h4 class="modal-title" >用户登录</h4>
-				   </div>
-				   <div class="modal-body">
-					<div class="form-group">
-						<label for="user_name">账号</label>
-						<input type="text" name="user_id" placeholder="账号或电话" class="form-control" id="user_name"/>
+	<div id="userlogin_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<form  id="userlogin_modal_form">
+				<div class="modal-content">
+				
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" >用户登录</h4>
 					</div>
-					<div class="form-group">
-						<label for="user_pwd">密码</label>
-						<input type="password" name="user_pwd" placeholder="密码" style="    text-indent: 5px;
-						letter-spacing: 5px;" class="form-control" id="user_pwd"/>
-						<a href="register.html" class="pull-right">新用户注册>></a>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="user_name">账号</label>
+							<input type="text" name="user_id" placeholder="账号或电话" class="form-control" id="user_name"/>
+						</div>
+						<div class="form-group">
+							<label for="user_pwd">密码</label>
+							<input type="password" name="user_pwd" placeholder="密码" style="    text-indent: 5px;
+							letter-spacing: 5px;" class="form-control" id="user_pwd"/>
+							<a th:href="@{/register.html}" class="pull-right">新用户注册>></a>
+						</div>
+						
 					</div>
-					
+					<div class="modal-footer">
+						<div class="form-group">
+							<input class="btn btn-success col-xs-12" onclick="action_login_form()" type="button" value="登录">
+						</div>
+					</div>
 				</div>
-				<div class="modal-footer">
-					<div class="form-group">
-						<input class="btn btn-success col-xs-12" onclick="action_login_form()" type="button" value="登录">
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
+			</form>
+		</div>
   </div>
 
 
 <!--支付界面-->
   <div id="pay_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
-		<form action="createrOrder" id="pay_modal_form">
+		<form th:action="@{/createrOrder}" id="pay_modal_form">
 			  <div class="modal-content">
 			
 				<div class="modal-header">
@@ -468,18 +477,89 @@
 	</div>
   </div>
 
-
-
-		<input type="hidden" th:value="${vehicle}" id="staff_name2"/>
-
+		<input type="hidden" th:value="${vehicle.base}" id="vehicle_base"/>
+		<input type="hidden"  th:value="${vehicle.vehicle_id}" id="vehicle_id2" >
+		<input type="hidden"  th:value="${vehicle.vehicle_base_id}" id="vehicle_base_id" >
+		<input type="hidden"  th:value="${vehicle.vehicle_employee_id}" id="vehicle_employee_id" >
+		<input type="hidden"  th:value="${vehicle.vehicle_price}" id="vehicle_price" >
+		<input type="hidden"  th:value="${vehicle.vehicle_describe}" id="vehicle_describe" >
+		<input type="hidden"  th:value="${vehicle.vehicle_mileage}" id="vehicle_mileage2" >
+		<input type="hidden"  th:value="${vehicle.vehicle_condition}" id="vehicle_condition2" >
+		<input type="hidden"  th:value="${vehicle.vehicle_state}" id="vehicle_state" >
+		
+  		
 	</div>
 </div>
 <script type="text/javascript" th:src="@{/static/lib/jquery.min.js}" ></script>
 <script type="text/javascript" th:src="@{/static/lib//bootstrap-3.3.7-dist/js/bootstrap.min.js}" ></script>
 <script type="text/javascript" th:src="@{/static/js/index.js}"></script>
 <script type="text/javascript">
+function placeorder_info(){
+	if(userInfo=='' || userInfo == null){
+		login_modal();//若用户未登录则调出登录模态框
+
+		return;
+	}
+	var baseobj=eval('(' + $("#vehicle_base").val() + ')');
+	var vehcile={
+		base:baseobj,
+		vehcile_id:$("#vehicle_id2").val(),
+		vehicle_base_id:$("#vehicle_base_id").val(),
+		vehicle_employee_id:$("#vehicle_employee_id").val(),
+		vehicle_price:$("#vehicle_price").val(),
+		vehicle_describe:$("#vehicle_describe").val(),
+		vehicle_mileage:$("#vehicle_mileage2").val(),
+		vehicle_condition:$("#vehicle_condition2").val(),
+		vehicle_state:$("#vehicle_state").val()
+	};
+
+	/**
+	 * 写到这
+	 *	在前台计算好金额显示,传送日期和天数到后台,后台生成订单
+	* 	然后在跳转页面让用户查看订单
+	*  下一步写订单生成
+	* 
+	*/
+	$('#pay_modal').modal();
+
+	$("#order_brand").text(vehcile.base.base_brand);
+	$("#order_type").text(vehcile.base.base_type);
+	$("#order_disp").text(vehcile.base.base_displacement+' L');
+	$("#order_speed").text(vehcile.base.base_speed+' km/h');
+	$("#order_mileage").text(vehcile.vehicle_mileage+'万公里');
+	$("#order_condition").text(vehcile.vehicle_condition+'成');
+	$("#order_price").text(vehcile.vehicle_price);
+	$("#order_price").data("vehicle_price", vehcile.vehicle_price);
+
+	$("#pay_btn").attr("onclick", "pay_info("+vehcile.vehcile_id+","+userInfo.user_id+")");
+	$("#dayNum").val(1);
+}
+
+/**
+ * 支付接口,测试阶段默认返回字符成成功
+ * @param {*} vehicle_id 当前订单的车辆的id
+ * @param {*} user_id 用户的id
+ */
+ function pay_info(vehicle_id,user_id){
+	
+	
+	$("#vehicle_id").val(vehicle_id);
+	$("#user_id").val(user_id);
+
+	console.log($("#vehicle_id").val());
+	console.log($("#user_id").val());
+	
+	//这里调用自付接口,true则代表支付成功
+	if(true){
+		
+		$("#pay_modal_form").submit();
+
+	}else{
 
 
+	}
+
+}
 </script>
 </body>
 </html>

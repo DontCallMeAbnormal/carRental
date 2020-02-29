@@ -18,7 +18,7 @@
 	<!-- 模板解析器  -->
     <bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
         <property name="prefix" value="" /><!-- 路径前缀 -->
-        <property name="suffix" value=".html" /><!-- 路径后缀 -->
+        <property name="suffix" value="" /><!-- 路径后缀 -->
         <property name="templateMode" value="HTML5" />
         <property name="cacheable" value="false" />
         <property name="characterEncoding" value="UTF-8"/>

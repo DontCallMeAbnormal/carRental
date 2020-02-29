@@ -26,7 +26,23 @@
     <!--[if lt IE 9]>
       <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-    <![endif]-->
+	<![endif]-->
+	<style>
+		.media_order{
+			margin-bottom: 10px;
+			padding: 10px;
+			background-color: #ececec;
+			border-radius: 5px;
+			color: #777777;
+		}
+		@media (min-width: 700px) { 
+			.media-right > img{
+				width: 300px;
+			}
+
+
+		}
+	</style>
   </head>
 <body>
 
@@ -83,127 +99,35 @@
 					<li><a th:href="@{/index.html}">首页</a></li>
 					<li class="active">订单</li>
 				</ol>	  
-				
-				<!--汽车图片-->
-				<div class="col-md-6 vhicle">
-					<img class="img-responsive" th:src ="@{/}+${vehicle.base.base_photo}" src="static/photo/20200114031040.png" alt="图片失效"/>
+				<h3 class="panel-heading">我的订单</h3>
 
-				</div>
-				
-				<!--汽车相关信息-->
-				<div class="col-md-6 vhicle">
-					<h2 id="vehicle_base_brand" th:text="${vehicle.base.base_brand}+' '+${vehicle.base.base_model}" >宝马 2019款 青春运动版</h2>
-					<h3 class="price"><span class="glyphicon glyphicon-yen"></span> <span id="vahicle_price" th:text="${vehicle.vehicle_price}" >100</span>元/天</h3>
-					<h5 class="employee_phone"><span class="glyphicon glyphicon-user"></span>&emsp;联系客服(电话):<span id="employee_phone" th:text="${employee.employee_phone}+' '+${employee.employee_name}" >13235365347</span></h5>
+				<div th:attr="lenght=${orderStat.size}" th:each="order:${orders}">
+					<div class="media media_order">
+						<div class="media-body">
+							<a th:href="@{/details/}+${order.vehicleFull.vehicle_id}">
+								<h4 class="media-heading" th:text="${order.vehicleFull.base.base_brand}+' '+${order.vehicleFull.base.base_model}" >车辆的品牌及型号</h4>
+								<h4 th:switch="${order.order_state}">
+									<small th:case="'预订单'">(待取车)</small>
+									<small th:case="'实订单'">(已取车)</small>
+									<small th:case="'完成订单'">(已还车)</small>
+								</h4>
+							</a>
+							<p th:text="'金额 :'+${order.order_price}+'元'">金额</p>
 
-					<hr>
-					<h3 class="title_h3_bule">基本信息</h3>
-					<div class="row info_list">
-						<div class="col-md-6">
-							<span class="index-icon icon">&#xe63a;</span>
-							<span>品&emsp;牌:&emsp;</span>
-							<span id="vehicle_base_brand" th:text="${vehicle.base.base_brand}" >宝马</span>
-						</div>
-						<div class="col-md-6">
-							<span class="index-icon icon">&#xe629;</span>
-							<span>车&emsp;型:&emsp;</span>
-							<span id="vehicle_base_type" th:text="${vehicle.base.base_type}" >suv</span>
-						</div>
-						<div class="col-md-6">
-							<span class="index-icon icon">&#xe826;</span>
-							<span>上市时间:&emsp;</span>
-							<span id="vehicle_base_produced" th:text="${vehicle.base.base_produced}" >2016-8-31</span>
-						</div>
-						<div class="col-md-6">
-							<span class="index-icon icon">&#xe623;</span>
-							<span>排&emsp;量:&emsp;</span>
-							<span id="vehicle_base_displacement" th:text="${vehicle.base.base_displacement}+'L'">2.0L</span>
-
-						</div>
-						<div class="col-md-6">
-							<span class="index-icon icon">&#xe603;</span>
-							<span>速&emsp;度:&emsp;</span>
-							<span id="vehicle_base_speed" th:text="${vehicle.base.base_speed}+'km/h'" >260km/h</span>
-						</div>
-						
-						
-						
-						
-					</div>
-
-					<h3 class="title_h3_bule">租车信息</h3>
-					<div class="row info_list">
-						<div class="col-md-6">
-							<span class="index-icon icon">&#xe61f;</span>
-							<span>里&emsp;程:&emsp;</span>
-							<span id="vehicle_mileage" th:text="${vehicle.vehicle_mileage}+'万公里' ">1.2万公里</span>
-						</div>
-						<div class="col-md-6">
+							<p th:text="'取车日期 :'+${#dates.format(order.order_startDate,'yyyy-MM-dd')}">取车日期</p>
+							<p th:text="'还车日期 :'+${#dates.format(order.order_stopDate,'yyyy-MM-dd')}">还车日期</p>
 							
-							<span class="index-icon icon">&#xe628;</span>
-							<span>新旧程度:&emsp;</span>
-							<span id="vehicle_condition" th:text="${vehicle.vehicle_condition}+'成新'" >9成新</span>
+							
+							<p  class="text-right" th:text="'联系我们 :'+${order.employee.employee_name}+'  '+${order.employee.employee_phone}">负责人电话和姓名</p>
+							<p  class="text-right" th:text="${#dates.format(order.order_id,'yyyy-MM-dd HH:mm:ss')}">订单id号下单时间</p>
 								
 						</div>
-						
 
+						<div class="media-right media-middle">
+							<img width="100" class="media-object" th:src="@{/}+${order.vehicleFull.base.base_photo}" alt="...">
+						</div>
 					</div>
-
-					<hr>
-					
-					<div class="col-xs-12">
-						<button class="btn btn-success center-block" style="    letter-spacing: 10px;
-						font-size: 20px;
-						text-indent: 10px;
-						padding: 10px 20px;">立即预订</button>
-					</div>
-					
-
-
 				</div>
-
-				<!--租车需知道-->
-				<div class="col-xs-12">
-					<h3 class="title_h3_black">租车需知</h3>
-					<p class="text_p_gray">在租车前你需要了解相关流程以及注意事项</p>
-					<h4 style="margin: 50px 0 20px 0;">服务方式</h4>
-					<p>
-						1.网上预订:
-						<p class="text_p_gray">&emsp;你可以在本网页进行网上车辆的预订,当您支付租赁资费后,就可以直接到门店凭您的<strong>账号和密码进行取车</strong></p>
-						2.门店直租:
-						<p class="text_p_gray">&emsp;你可以在网站中看中某辆车后,到门店进行租车</p>
-
-					</p>
-					<h4 style="margin: 50px 0 20px 0;">租车资格</h4>
-					<p class="text_p_gray">租车前，请确认您满足以下条件、持有以下证件：
-						<p class="text_p_gray">1. 年龄要求：年满18周岁</p>
-						<p class="text_p_gray">2. 证件要求：</p>
-						<p class="text_p_gray">&emsp;取车时，请出示以下证件的原件：</p>
-						<p class="text_p_gray">&emsp;(1)本人的有效身份证件</p>
-						<p class="text_p_gray">&emsp;(2)本人国内有效驾驶证</p>
-						<p class="text_p_gray">&emsp;(3)有效信用卡（本人）:</p>
-						<p class="text_p_gray">&emsp;&emsp;如果您没有符合要求的信用卡，可请亲友为您提供担保，担保人对您在租车期间所产生的一切费用及责任承担无限连带责任。</p>
-					</p>
-					<h4 style="margin: 50px 0 20px 0;">资费说明</h4>
-					
-						<table class="table table-bordered">
-							<tr>
-								<th>提前还车</th>
-								<th>逾期还车</th>
-								<th>出租天数不足一天</th>
-							</tr>
-							<tr>
-								<td>多付金额不退</td>
-								<td>补全差价</td>
-								<td>不足一天按一天计算</td>
-							</tr>
-						</table>
-
-					
-				</div>
-
-
-
 
 			</div>
 

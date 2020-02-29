@@ -60,6 +60,21 @@
 							<li><a href="#">销售代表</a></li>
 							<li><a href="#">联系</a></li>
 						</ul>
+
+						<ul class="nav navbar-nav navbar-right" id="nav_user_li">
+							<li >
+								<a class="btn" onclick="login_modal()"  >登录&emsp;<span class="glyphicon glyphicon-user"></span></a>
+							</li>
+							<li >
+								<a href="userInfo" class="btn"  >订单&emsp;<span class="glyphicon glyphicon-shopping-cart"></span></a>
+							</li>
+						</ul>
+						
+						<!--用户信息隐藏域-->
+						<input class="hidden" th:value="${user}" />
+
+
+
 					</div>
 				</div>
 			</nav>
@@ -371,7 +386,7 @@
 <!--用户登录框-->
 <div id="userlogin_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 	<div class="modal-dialog modal-sm" role="document">
-		<form action="loginUser" id="userlogin_modal_form">
+		<form th:action="@{/loginUser}" id="userlogin_modal_form">
 			  <div class="modal-content">
 			
 				<div class="modal-header">
@@ -405,7 +420,7 @@
 <!--支付界面-->
   <div id="pay_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
-		<form action="createrOrder" id="pay_modal_form">
+		<form th:action="@{/createrOrder}" id="pay_modal_form">
 			  <div class="modal-content">
 			
 				<div class="modal-header">
@@ -507,15 +522,15 @@ function paserJson(){
 		//获取vehicle的属性,并将base对象和各个属性值装入对象
 		let vehicle={
 			base:base,
-			vehicle_id:$("#vehicle_id"+''+i).val(),
-			vehicle_base_id:$("#vehicle_base_id"+''+i).val(),
-			vehicle_employee_id:$("#vehicle_employee_id"+''+i).val(),
+			vehicle_id:$("#vehicle_id"+i).val(),
+			vehicle_base_id:$("#vehicle_base_id"+i).val(),
+			vehicle_employee_id:$("#vehicle_employee_id"+i).val(),
 			vehicle_price:$("#vehicle_price"+''+i).val(),
-			vehicle_describe:$("#vehicle_describe"+''+i).val(),
-			vehicle_mileage:$("#vehicle_mileage"+''+i).val(),
+			vehicle_describe:$("#vehicle_describe"+i).val(),
+			vehicle_mileage:$("#vehicle_mileage"+i).val(),
 			
-			vehicle_condition : $("#vehicle_condition"+''+i).val(),
-			vehicle_state : $("#vehicle_state"+''+i).val()
+			vehicle_condition : $("#vehicle_condition"+i).val(),
+			vehicle_state : $("#vehicle_state"+i).val()
 		};
 		//将解析好的对象装入数组
 		vehiclelist[i] = vehicle;
@@ -531,7 +546,7 @@ function paserJson(){
 	return vehiclelist;
 }
 
-var vehiclelist=paserJson();
+var vehiclelist=paserJson();//index.js的车程信息
 
 descVehicle();//默认升序
 function descVehicle(){
@@ -539,7 +554,10 @@ function descVehicle(){
 	var htmlstr='';
 	for(var i=0;i<vehiclelist.length;i++){
 		vehicle = vehiclelist[i];
-		
+		var str='';
+		if(vehicle.vehicle_state=='空闲'){
+			str ='<button onclick="placeorder_list('+i+')" class="btn btn-success">下单</button>';
+		}
 		htmlstr = htmlstr
 		+'<div class="col-sm-6">'
 		+'<div class="thumbnail">'
@@ -549,7 +567,7 @@ function descVehicle(){
 		+'	<h4><small>'+vehicle.base.base_produced+'|'+vehicle.vehicle_mileage+'万公里| '+vehicle.base.base_type+'</small></h4>'
 		+'	<div class="brand_footer">'
 		+'		<h4 class="price_lefttext"><span class="price_color" >'+vehicle.vehicle_price+'</span>元/天</h4>'
-		+'		<button class="btn btn-success">下单</button>'
+		+str
 		+'		<button onclick="details('+vehicle.vehicle_id+')" class="btn btn-info">详情</button>'
 		+'	</div>'
 		+'</div>'
@@ -571,7 +589,10 @@ function ascVehicle(){
 	var htmlstr='';
 	for(var i=vehiclelist.length-1;i>=0;i--){
 		vehicle = vehiclelist[i];
-
+		var str='';
+		if(vehicle.vehicle_state=='空闲'){
+			str ='<button onclick="placeorder_list('+i+')" class="btn btn-success">下单</button>';
+		}
 		htmlstr = htmlstr
 		+'<div class="col-sm-6">'
 		+'<div class="thumbnail">'
@@ -581,7 +602,7 @@ function ascVehicle(){
 		+'	<h4><small>'+vehicle.base.base_produced+'|'+vehicle.vehicle_mileage+'万公里| '+vehicle.base.base_type+'</small></h4>'
 		+'	<div class="brand_footer">'
 		+'		<h4 class="price_lefttext"><span class="price_color" >'+vehicle.vehicle_price+'</span>元/天</h4>'
-		+'		<button class="btn btn-success">下单</button>'
+		+str
 		+'		<button class="btn btn-info">详情</button>'
 		+'	</div>'
 		+'</div>'
@@ -598,9 +619,60 @@ function ascVehicle(){
 
 
 
-//strvfs=strvfs.substring(1,strvfs.indexOf(']')); 
+function placeorder_list(i){
+	if(userInfo=='' || userInfo == null){
+		login_modal();//若用户未登录则调出登录模态框
 
-//var vfs = eval('(' + strvfs + ')');
+		return;
+	}
+	var vehicle=vehiclelist[i];
+	/**
+	 * 写到这
+	 *	在前台计算好金额显示,传送日期和天数到后台,后台生成订单
+	* 	然后在跳转页面让用户查看订单
+	*  下一步写订单生成
+	* 
+	*/
+	$('#pay_modal').modal();
+
+	$("#order_brand").text(vehicle.base.base_brand);
+	$("#order_type").text(vehicle.base.base_type);
+	$("#order_disp").text(vehicle.base.base_displacement+' L');
+	$("#order_speed").text(vehicle.base.base_speed+' km/h');
+	$("#order_mileage").text(vehicle.vehicle_mileage+'万公里');
+	$("#order_condition").text(vehicle.vehicle_condition+'成');
+	$("#order_price").text(vehicle.vehicle_price);
+	$("#order_price").data("vehicle_price", vehicle.vehicle_price);
+
+	$("#pay_btn").attr("onclick", "pay_info("+vehicle.vehicle_id+","+userInfo.user_id+")");
+	$("#dayNum").val(1);
+}
+
+/**
+ * 支付接口,测试阶段默认返回字符成成功
+ * @param {*} vehicle_id 当前订单的车辆的id
+ * @param {*} user_id 用户的id
+ */
+ function pay_info(vehicle_id,user_id){
+	
+	
+	$("#vehicle_id").val(vehicle_id);
+	$("#user_id").val(user_id);
+
+	console.log($("#vehicle_id").val());
+	console.log($("#user_id").val());
+	
+	//这里调用自付接口,true则代表支付成功
+	if(true){
+		
+		$("#pay_modal_form").submit();
+
+	}else{
+
+
+	}
+
+}
 
 </script>
 

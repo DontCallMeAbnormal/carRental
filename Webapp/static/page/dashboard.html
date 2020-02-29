@@ -33,6 +33,9 @@
 
     //画图表
     function showChartOrder(data,date){
+		console.log(date);
+		
+    	console.log(data);
     	
     	var ctx = $("#lineChart");
         Chart.defaults.global.responsive = true;
@@ -44,10 +47,8 @@
                    [{
     		                label: "订单统计图",
     		                data: data,
-    		                
-    		                backgroundColor: "rgba(33,150,243,0.5)",
+							backgroundColor: "rgba(33,150,243,0.5)",
     		                borderColor: "rgba(33,150,243,1)",
-    	                	
     	           }]
            
            }
